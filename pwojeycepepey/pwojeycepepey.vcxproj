@@ -139,11 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Carc.cpp" />
     <ClCompile Include="Cexception.cpp" />
+    <ClCompile Include="CGraphe.cpp" />
+    <ClCompile Include="CSommet.cpp" />
     <ClCompile Include="pwojeycepepey.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Carc.h" />
     <ClInclude Include="Cexception.h" />
+    <ClInclude Include="CGraphe.h" />
+    <ClInclude Include="CSommet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

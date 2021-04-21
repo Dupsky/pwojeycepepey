@@ -1,6 +1,17 @@
 #pragma once
-class Cexception
+#include <string>
+#include <iostream>
+#include  <exception>
+
+using namespace std;
+class CException : public exception
 {
-	///adzazd
+private:
+
+	unsigned int uiEXCValeur;
+
+public:
+	void EXCset(unsigned int uiArg);
+	int EXCget();
 };
 
