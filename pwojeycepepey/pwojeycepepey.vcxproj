@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cexception.cpp" />
     <ClCompile Include="pwojeycepepey.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Cexception.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
