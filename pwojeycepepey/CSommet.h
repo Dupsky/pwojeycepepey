@@ -8,10 +8,11 @@ private:
 	Carc ** SOMPartant;
 public:
 	Csommet();
-	Csommet(unsigned int uiArg,Carc ** Lis1,Carc ** Lis2);
+	Csommet(unsigned int uiArg);
 	~Csommet();
+	void link(Csommet sommet);
 	void SOMModifierNum(unsigned int uiArg);
-	void SOMArcArrivant(Carc** ARCArg);
-	void SOMArcPartant(Carc** ARCArg);
+	void SOMArcArrivant(Carc * ARCArg);
+	void SOMArcPartant(Carc * ARCArg);
 };
 
