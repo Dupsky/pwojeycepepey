@@ -71,8 +71,9 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 ********************************************************************/
 void Csommet::SOMArcArrivant(Carc * ARCArg)
 {
-	realloc(this->SOMArrivant, sizeof(this->SOMArrivant) + sizeof(ARCArg));
-	this->SOMArrivant[this->tailleArrivant()] = ARCArg;
+	if (realloc(this->SOMArrivant, sizeof(this->SOMArrivant) + sizeof(ARCArg))) {
+		this->SOMArrivant[this->tailleArrivant()] = ARCArg;
+	}
 }
 
 /*******************************************************************
@@ -84,8 +85,9 @@ void Csommet::SOMArcArrivant(Carc * ARCArg)
 ********************************************************************/
 void Csommet::SOMArcPartant(Carc * ARCArg)
 {
-	realloc(this->SOMPartant, sizeof(this->SOMPartant) + sizeof(ARCArg));
-	this->SOMPartant[this->taillePartant()] = ARCArg;
+	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) + sizeof(ARCArg))) {
+		this->SOMPartant[this->taillePartant()] = ARCArg;
+	}
 }
 
 /*******************************************************************

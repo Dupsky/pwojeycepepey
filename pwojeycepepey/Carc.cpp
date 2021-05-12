@@ -5,5 +5,4 @@ Carc::Carc(unsigned int destination) {
 }
 
 Carc::~Carc() {
-	delete this;
 }
