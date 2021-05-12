@@ -1,6 +1,6 @@
 #pragma once
 class Cexception
 {
-	///adzazd
+	salut lé ami
 };
 
