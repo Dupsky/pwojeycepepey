@@ -2,10 +2,18 @@
 //
 
 #include <iostream>
+#include "Carc.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Carc arc1(1);
+    Carc arc2(2);
+    Carc arc3(3);
+    Carc* tab[3];
+    tab[0] = &arc1;
+    tab[1] = &arc2;
+    tab[2] = &arc3;
+    std::cout << "taille tab :" << sizeof(tab) << std::endl;
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage

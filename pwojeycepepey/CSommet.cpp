@@ -1,6 +1,5 @@
 #include "CSommet.h"
 
-
 Csommet::Csommet()
 {
 	this->uiSOMNumSom=0;
