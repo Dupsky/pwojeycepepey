@@ -14,5 +14,9 @@ public:
 	void SOMModifierNum(unsigned int uiArg);
 	void SOMArcArrivant(Carc * ARCArg);
 	void SOMArcPartant(Carc * ARCArg);
+	void suppArcPartant(Carc* ARCArg);
+	void suppArcArrivant(Carc* ARCArg);
+	int tailleArrivant();
+	int taillePartant();
 };
 
