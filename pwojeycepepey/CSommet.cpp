@@ -55,15 +55,23 @@ void Csommet::link(Csommet sommet)
 }
 
 /*******************************************************************
-*
+* Modifier le numéro d'un sommet
 ********************************************************************
-*Entrée :
-*Sortie :
-*Entraîne :
+*Entrée : uiArg le numéro à entrer
+*		  l'objet pointé est de la classe Csommet
+*Sortie : void
+*Entraîne : Modifie le numéro du sommet et change la destination de
+*			tout les arcs arrivant
 ********************************************************************/
 void Csommet::SOMModifierNum(unsigned int uiArg)
 {
-
+	this->uiSOMNumSom = uiArg;
+	int i = 0;
+	while(this->SOMArrivant[i] != nullptr)
+	{
+		this->SOMArrivant[i]->ARCModifDest(uiArg);
+		i++;
+	}
 }
 
 /*******************************************************************
@@ -108,7 +116,7 @@ void Csommet::SOMArcPartant(Carc * ARCArg)
 ********************************************************************/
 int Csommet::tailleArrivant()
 {
-	return sizeof(this->SOMArrivant) / sizeof(Carc*);
+	return (sizeof(this->SOMArrivant) / sizeof(Carc*));
 }
 
 /*******************************************************************
@@ -121,7 +129,7 @@ int Csommet::tailleArrivant()
 ********************************************************************/
 int Csommet::taillePartant()
 {
-	return sizeof(this->SOMPartant) / sizeof(Carc*);
+	return (sizeof(this->SOMPartant) / sizeof(Carc*));
 }
 
 /*******************************************************************

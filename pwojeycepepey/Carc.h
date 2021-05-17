@@ -6,5 +6,6 @@ private:
 public:
 	Carc(unsigned int destination);
 	~Carc();
+	void ARCModifDest(unsigned int uiArg);
 };
 
