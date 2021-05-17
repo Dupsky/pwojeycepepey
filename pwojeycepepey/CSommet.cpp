@@ -1,5 +1,6 @@
 #include "CSommet.h"
 #include <cstdlib>
+#include <iostream>
 
 
 Csommet::Csommet()
@@ -83,9 +84,9 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 *Entraîne : L'ajout de l'arc en argument dans la liste de arrivant de
 *			l'objet pointé
 ********************************************************************/
-void Csommet::SOMArcArrivant(Carc * ARCArg)
+void Csommet::SOMArcArrivant(Carc *ARCArg)
 {
-	if (realloc(this->SOMArrivant, sizeof(this->SOMArrivant) + sizeof(ARCArg))) {
+	if (this->SOMArrivant = (Carc**)realloc(this->SOMPartant, (this->taillePartant() + 1) * sizeof(ARCArg))) {
 		this->SOMArrivant[this->tailleArrivant()] = ARCArg;
 	}
 }
@@ -99,9 +100,9 @@ void Csommet::SOMArcArrivant(Carc * ARCArg)
 *Entraîne : L'ajout de l'arc en argument dans la liste de partant de 
 *			l'objet pointé
 ********************************************************************/
-void Csommet::SOMArcPartant(Carc * ARCArg)
+void Csommet::SOMArcPartant(Carc *ARCArg)
 {
-	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) + sizeof(ARCArg))) {
+	if (this->SOMPartant = (Carc**)realloc(this->SOMPartant, (this->taillePartant() + 1) * sizeof(ARCArg))) {
 		this->SOMPartant[this->taillePartant()] = ARCArg;
 	}
 }
@@ -169,5 +170,10 @@ void Csommet::suppArcPartant(Carc* ARCArg)
 		this->SOMPartant[i] = this->SOMPartant[i+1];
 	}
 
-	realloc(this->SOMPartant, sizeof(this->SOMPartant) - sizeof(ARCArg));
+	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) - sizeof(ARCArg))) {
+		std::cout << "realloc réussi" << std::endl;
+	}
+	else {
+		std::cout << "realloc non réussi" << std::endl;
+	}
 }
