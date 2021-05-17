@@ -3,9 +3,16 @@
 
 #include <iostream>
 #include "Carc.h"
+#include "CSommet.h"
 
 int main()
 {
+    Csommet sommet1(1);
+    Csommet sommet2(2);
+    Csommet sommet3(3);
+    Csommet sommet4(4);
+
+
     Carc arc1(1);
     Carc arc2(2);
     Carc arc3(3);
