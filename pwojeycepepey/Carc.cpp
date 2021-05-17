@@ -6,3 +6,7 @@ Carc::Carc(unsigned int destination) {
 
 Carc::~Carc() {
 }
+
+void Carc::ARCModifDest(unsigned int uiArg) {
+	this->destination = uiArg;
+}
