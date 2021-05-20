@@ -79,7 +79,7 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 *Entraîne : L'ajout de l'arc en argument dans la liste de arrivant de
 *			l'objet pointé
 ********************************************************************/
-void Csommet::SOMArcArrivant(Carc * ARCArg)
+void Csommet::SOMArcArrivant(Carc  * ARCArg)
 {
 	if (realloc(this->SOMArrivant, sizeof(this->SOMArrivant) + sizeof(ARCArg))) {
 		this->SOMArrivant[this->tailleArrivant()] = ARCArg;

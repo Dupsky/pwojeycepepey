@@ -10,3 +10,7 @@ Carc::~Carc() {
 void Carc::ARCModifDest(unsigned int uiArg) {
 	this->destination = uiArg;
 }
+unsigned int Carc::getDest()
+{
+	return this->destination;
+}
