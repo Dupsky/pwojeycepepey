@@ -1,5 +1,6 @@
 #include "CSommet.h"
 #include <cstdlib>
+#include <iostream>
 
 
 Csommet::Csommet()
@@ -44,10 +45,14 @@ Csommet::Csommet(unsigned int uiArg)
 ********************************************************************/
 void Csommet::link(Csommet sommet)
 {
-	Carc arc1(sommet.uiSOMNumSom); 
-	Carc arc2(this->uiSOMNumSom);
-	
+	Carc arc1(sommet.uiSOMNumSom); //arc en direction du sommet 2
+	Carc arc2(this->uiSOMNumSom); //arc en direction du sommet 1
 
+	this->SOMArcPartant(&arc1);
+	this->SOMArcArrivant(&arc2);
+
+	sommet.SOMArcPartant(&arc2);
+	sommet.SOMArcArrivant(&arc1);
 }
 
 /*******************************************************************
@@ -79,9 +84,9 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 *Entraîne : L'ajout de l'arc en argument dans la liste de arrivant de
 *			l'objet pointé
 ********************************************************************/
-void Csommet::SOMArcArrivant(Carc  * ARCArg)
+void Csommet::SOMArcArrivant(Carc *ARCArg)
 {
-	if (realloc(this->SOMArrivant, sizeof(this->SOMArrivant) + sizeof(ARCArg))) {
+	if (this->SOMArrivant = (Carc**)realloc(this->SOMPartant, (this->taillePartant() + 1) * sizeof(ARCArg))) {
 		this->SOMArrivant[this->tailleArrivant()] = ARCArg;
 	}
 }
@@ -95,9 +100,9 @@ void Csommet::SOMArcArrivant(Carc  * ARCArg)
 *Entraîne : L'ajout de l'arc en argument dans la liste de partant de 
 *			l'objet pointé
 ********************************************************************/
-void Csommet::SOMArcPartant(Carc * ARCArg)
+void Csommet::SOMArcPartant(Carc *ARCArg)
 {
-	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) + sizeof(ARCArg))) {
+	if (this->SOMPartant = (Carc**)realloc(this->SOMPartant, (this->taillePartant() + 1) * sizeof(ARCArg))) {
 		this->SOMPartant[this->taillePartant()] = ARCArg;
 	}
 }
@@ -153,5 +158,22 @@ void Csommet::suppArcArrivant(Carc * ARCArg)
 ********************************************************************/
 void Csommet::suppArcPartant(Carc* ARCArg)
 {
+	Carc** temp = this->SOMPartant;
+	int i = 0;
+	int temp_taille = this->taillePartant();
 
+	while (this->SOMPartant[i] != ARCArg || i <= temp_taille) {
+		i++;
+	}
+
+	while (i < temp_taille) {
+		this->SOMPartant[i] = this->SOMPartant[i+1];
+	}
+
+	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) - sizeof(ARCArg))) {
+		std::cout << "realloc réussi" << std::endl;
+	}
+	else {
+		std::cout << "realloc non réussi" << std::endl;
+	}
 }
