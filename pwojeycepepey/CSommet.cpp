@@ -22,6 +22,11 @@ Csommet::~Csommet()
 
 }
 
+unsigned int Csommet::AfficherNum()
+{
+	return this->uiSOMNumSom;
+}
+
 /*******************************************************************
 *
 ********************************************************************
@@ -175,5 +180,22 @@ void Csommet::suppArcPartant(Carc* ARCArg)
 	}
 	else {
 		std::cout << "realloc non réussi" << std::endl;
+	}
+}
+/*******************************************************************
+* Afficher les arcs partant d'un sommet
+********************************************************************
+*Entrée : L'objet pointé est de la classe Csommet
+*		
+*Sortie : void
+*Entraîne :Affiche la liste des arcs partant et leurs destination
+********************************************************************/
+void Csommet::AfficherArcsPartant()
+{
+	int i = 0;
+	while (this->SOMPartant[i] != nullptr)
+	{
+		std::cout << " " << this->AfficherNum() << "-->" << this->SOMPartant[i]->getDest() << " ;";
+		i++;
 	}
 }
