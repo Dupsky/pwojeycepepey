@@ -66,3 +66,48 @@ size_t Cgraphe::tailleTab()
 {
 	return this->stTailleTab;
 }
+
+void Cgraphe::SuppSommetIndex(int iArg)
+{
+
+}
+
+void Cgraphe::SuppSommetNum(int iArg)
+{
+	int iTemp = 0;
+	for (int i = 0; i < this->stTailleTab; i++)
+	{
+		if (this->pGRATab[i].AfficherNum() == iArg)
+		{
+			iTemp++;
+		}
+	}
+	if (iTemp == 0) {
+		CException EXCObj;
+		EXCObj.EXCset(sommetNonPresent);
+		throw(EXCObj);
+	}
+	for (int i = 0; i < this->stTailleTab; i++)
+	{
+
+		if (this->pGRATab[i].AfficherNum() == iArg) {
+			for (int j = i+1; j < this->stTailleTab; j++)
+			{
+				this->pGRATab[i] = this->pGRATab[j];
+				i++;
+			}
+		}
+	}
+	
+	Csommet* temp = (Csommet*)realloc(this->pGRATab, (size_t)sizeof(this->pGRATab) - (size_t)sizeof(Csommet));
+	if (temp != nullptr || this->stTailleTab == 1)
+	{
+		CException EXCObj;
+		EXCObj.EXCset(reallocImpo);
+		throw(EXCObj);
+	}
+	else {
+		this->pGRATab = temp;
+	}
+
+}
