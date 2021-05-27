@@ -73,7 +73,7 @@ void Cgraphe::SuppSommetIndex(int iArg)
 }
 
 void Cgraphe::SuppSommetNum(int iArg)
-{
+{/*
 	int iTemp = 0;
 	for (int i = 0; i < this->stTailleTab; i++)
 	{
@@ -109,5 +109,5 @@ void Cgraphe::SuppSommetNum(int iArg)
 	else {
 		this->pGRATab = temp;
 	}
-
+*/
 }

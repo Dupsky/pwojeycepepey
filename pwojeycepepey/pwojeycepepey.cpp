@@ -6,8 +6,8 @@
 
 int main()
 {
-    std::cout << "debut test" << std::endl;
 
+    /*
     Csommet sommet1(1);
     Csommet sommet2(2);
     Csommet sommet3(3);
@@ -19,16 +19,16 @@ int main()
     Carc arc4 = Carc();
     Carc arc5 = Carc();
     Carc arc6 = Carc();
-
+    
 
     sommet1.link(sommet2, arc1, arc2);
     sommet1.link(sommet3, arc3, arc4);
     //sommet1.link(sommet4, arc5, arc6);
-
+    
 
     
 
-
+    /*
     sommet1.AfficherTabs();
     sommet2.AfficherTabs();
 
@@ -36,7 +36,7 @@ int main()
 
     sommet1.AfficherTabs();
     sommet2.AfficherTabs();
-
+    */
     //sommet1.suppArcArrivant(&arc1);
 
     //sommet1.AfficherTabs();
