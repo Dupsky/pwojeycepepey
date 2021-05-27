@@ -12,6 +12,8 @@ public:
 	Csommet();
 	Csommet(unsigned int uiArg);
 	~Csommet();
+	unsigned int AfficherNum();
+	void AfficherArcsPartant();
 	void link(Csommet sommet);
 	void SOMModifierNum(unsigned int uiArg);
 	void SOMArcArrivant(Carc * ARCArg);
