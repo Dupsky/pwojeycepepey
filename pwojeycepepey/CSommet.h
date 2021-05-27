@@ -6,8 +6,8 @@ private:
 	unsigned int uiSOMNumSom;
 	Carc ** SOMArrivant;
 	Carc ** SOMPartant;
-	int nbElemArrivant;
-	int nbElemPartant;
+	int iSOMArrivant;
+	int iSOMPartant;
 public:
 	Csommet();
 	Csommet(unsigned int uiArg);
@@ -20,7 +20,8 @@ public:
 	void SOMArcPartant(Carc * ARCArg);
 	void suppArcPartant(Carc* ARCArg);
 	void suppArcArrivant(Carc* ARCArg);
-	int tailleArrivant();
-	int taillePartant();
+	//int tailleArrivant();
+	//int taillePartant();
+	void AfficherTabs();
 };
 
