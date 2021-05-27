@@ -13,9 +13,12 @@ public:
 	size_t tailleTab();
 	void AfficherGraph();
 	void InverserGraph();
+	void SuppSommetIndex(int iArg);
+	void SuppSommetNum(int iArg);
 };
 
 ///////////erreurs///////////////
 
 #define reallocImpo 1
 #define sommetPresent 2
+#define sommetNonPresent 3
