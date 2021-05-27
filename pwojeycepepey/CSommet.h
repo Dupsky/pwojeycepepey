@@ -36,5 +36,6 @@ public:
 	int taillePartant();
 
 	void AfficherTabs();
+	void SwitchLink(Csommet sommet);
 };
 

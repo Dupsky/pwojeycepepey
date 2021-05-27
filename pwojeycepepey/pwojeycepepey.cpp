@@ -28,6 +28,7 @@ int main()
 
     
 
+
     sommet1.AfficherTabs();
     sommet2.AfficherTabs();
 

@@ -1,5 +1,8 @@
 #include "Cgraphe.h"
+#include "Cexception.h"
 #include <iostream>
+
+
 
 Cgraphe::Cgraphe()
 {
@@ -9,15 +12,27 @@ Cgraphe::Cgraphe()
 
 void Cgraphe::addSommet(Csommet sommet)
 {
+	for (int i = 0; i < this->stTailleTab; i++)
+	{
+		if (this->pGRATab[i].AfficherNum()==sommet.AfficherNum())
+		{
+			CException EXCObj;
+			EXCObj.EXCset(sommetPresent);
+			throw(EXCObj);
+		}
+	}
+
 	Csommet* temp = (Csommet*)realloc(this->pGRATab, (size_t)sizeof(this->pGRATab) + (size_t)sizeof(sommet));
 	if (temp != nullptr)
 	{
-		this->pGRATab = temp;
-		
+		CException EXCObj;
+		EXCObj.EXCset(reallocImpo);
+		throw(EXCObj);
 	}
 	else {
-		std::cerr << "erreur de réallocation" << std::endl;
+		this->pGRATab = temp;
 	}
+	
 	if (this->pGRATab != nullptr) this->pGRATab[this->stTailleTab] = sommet;
 	stTailleTab++;
 }
@@ -34,8 +49,20 @@ void Cgraphe::AfficherGraph()
 	}
 }
 
-/*size_t Cgraphe::tailleTab()
+void Cgraphe::InverserGraph()
 {
-	return (sizeof(this->pGRATab) / sizeof(Csommet));
+	for (int i = 0; i < this->stTailleTab; i++)
+	{
+		for (int j = 0; j < this->stTailleTab; j++)
+		{
+			if (j > i) {
+				this->pGRATab[i].SwitchLink(this->pGRATab[j]);
+			}
+		}
+	}
 }
-*/
+
+size_t Cgraphe::tailleTab()
+{
+	return this->stTailleTab;
+}

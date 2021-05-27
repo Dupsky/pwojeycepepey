@@ -10,6 +10,12 @@ private:
 public:
 	Cgraphe();
 	void addSommet(Csommet sommet);
-	//size_t tailleTab();
+	size_t tailleTab();
 	void AfficherGraph();
+	void InverserGraph();
 };
+
+///////////erreurs///////////////
+
+#define reallocImpo 1
+#define sommetPresent 2
