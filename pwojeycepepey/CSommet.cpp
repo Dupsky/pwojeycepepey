@@ -41,6 +41,20 @@ unsigned int Csommet::AfficherNum()
 *Sortie :
 *Entraîne :
 ********************************************************************/
+
+void Csommet::AfficherArcsPartant()
+{
+
+}
+
+
+/*******************************************************************
+*
+********************************************************************
+*Entrée :
+*Sortie :
+*Entraîne :
+********************************************************************/
 Csommet::Csommet(unsigned int uiArg)
 {
 	this->uiSOMNumSom = uiArg;
@@ -57,20 +71,21 @@ Csommet::Csommet(unsigned int uiArg)
 *Sortie :
 *Entraîne :
 ********************************************************************/
-void Csommet::link(Csommet sommet)
+void Csommet::link(Csommet sommet, Carc &arc1, Carc &arc2)
 {
-	Carc * arc1 = new Carc(sommet.uiSOMNumSom);//arc en direction du sommet 2
-	Carc * arc2 = new Carc(this->uiSOMNumSom);//arc en direction du sommet 1
-	//Carc arc1(sommet.uiSOMNumSom); //arc en direction du sommet 2
-	//Carc arc2(this->uiSOMNumSom); //arc en direction du sommet 1
-	std::cout << arc1 << std::endl;
-	std::cout << arc2 << std::endl;
+	std::cout << "lien entre le sommet " << this->AfficherNum() << " et le sommet " << sommet.AfficherNum() << std::endl;
 
-	this->SOMArcPartant(arc1);
-	this->SOMArcArrivant(arc2);
+	arc1.ARCModifDest(sommet.AfficherNum());
 
-	sommet.SOMArcPartant(arc2);
-	sommet.SOMArcArrivant(arc1);
+	this->SOMArcPartant(&arc1);
+	sommet.SOMArcArrivant(&arc1);
+
+	arc2.ARCModifDest(this->AfficherNum());
+
+	sommet.SOMArcPartant(&arc2);
+	this->SOMArcArrivant(&arc2);
+	
+	
 }
 
 /*******************************************************************
@@ -104,20 +119,15 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 ********************************************************************/
 void Csommet::SOMArcArrivant(Carc *ARCArg)
 {
-	//std::cout << "taille arrivant " << sizeof(this->SOMArrivant) << std::endl;
-
-
 		//Carc ** tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->tailleArrivant() + 1) * (size_t)sizeof(ARCArg));
-		Carc** tmp = (Carc**) realloc (this->SOMArrivant, ((size_t)this->tailleArrivant() + 1) * (size_t)sizeof(ARCArg));
+
+
+		Carc** tmp = (Carc**) realloc (this->SOMArrivant, ((size_t)this->taillePartant() + 1) * (size_t)sizeof(ARCArg));
 		if (tmp != nullptr) {
 			this->SOMArrivant = tmp;
 		}
-		else {
-			std::cout<<"err"<<std::endl;
-		}
 	
-	this->SOMArrivant[this->tailleArrivant()-1] = ARCArg;
-	//std::cout << "taille arrivant apres " << sizeof(this->SOMArrivant) << std::endl;
+	this->SOMArrivant[this->tailleArrivant()] = ARCArg;
 	this->iSOMArrivant++;
 }
 
