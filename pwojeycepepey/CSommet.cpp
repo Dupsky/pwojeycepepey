@@ -104,11 +104,11 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 ********************************************************************/
 void Csommet::SOMArcArrivant(Carc *ARCArg)
 {
-	std::cout << "taille arrivant " << sizeof(this->SOMArrivant) << std::endl;
+	//std::cout << "taille arrivant " << sizeof(this->SOMArrivant) << std::endl;
 
 
 		//Carc ** tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->tailleArrivant() + 1) * (size_t)sizeof(ARCArg));
-		Carc** tmp = (Carc**) realloc (this->SOMArrivant, (16));
+		Carc** tmp = (Carc**) realloc (this->SOMArrivant, ((size_t)this->tailleArrivant() + 1) * (size_t)sizeof(ARCArg));
 		if (tmp != nullptr) {
 			this->SOMArrivant = tmp;
 		}
@@ -117,8 +117,8 @@ void Csommet::SOMArcArrivant(Carc *ARCArg)
 		}
 	
 	this->SOMArrivant[this->tailleArrivant()-1] = ARCArg;
-	std::cout << "taille arrivant apres " << sizeof(this->SOMArrivant) << std::endl;
-	this->nbElemArrivant++;
+	//std::cout << "taille arrivant apres " << sizeof(this->SOMArrivant) << std::endl;
+	this->iSOMArrivant++;
 }
 
 /*******************************************************************
@@ -141,7 +141,7 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 		}
 	
 	this->SOMPartant[this->taillePartant()] = ARCArg;
-	this->nbElemPartant++;
+	this->iSOMPartant++;
 }
 
 /*******************************************************************
@@ -152,9 +152,9 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 *Entraîne : La récuperation de la taille du tableau de arrivant de
 *			l'objet pointé
 ********************************************************************/
-/*int Csommet::tailleArrivant()
+int Csommet::tailleArrivant()
 {
-	return this->nbElemArrivant;
+	return this->iSOMArrivant;
 }
 
 /*******************************************************************
@@ -165,9 +165,9 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 *Entraîne : La récuperation de las taille du tableau de partant de
 *			l'objet pointé
 ********************************************************************/
-/*int Csommet::taillePartant()
+int Csommet::taillePartant()
 {
-	return this->nbElemPartant;
+	return this->iSOMPartant;
 }
 
 /*******************************************************************
@@ -244,4 +244,24 @@ void Csommet::AfficherTabs() {
 		std::cout << "T[" << i << "] = " << this->SOMArrivant[i]->getDest() << std::endl;
 		i++;
 	}
+}
+
+/*******************************************************************
+*  Affichage des arcs partant du sommet
+********************************************************************
+*Entrée : L'objet pointé est de la classe Csommet
+*Sortie : void
+*Entraîne : Affichages des arcs partant du sommet
+********************************************************************/
+
+void Csommet::AfficherArcsPartant() 
+{
+	int i = 0;
+
+	while (i < this->iSOMPartant)
+	{
+		std::cout << this->uiSOMNumSom << "->" << this->SOMPartant[i]->getDest()<<" ; ";
+		i++;
+	}
+
 }
