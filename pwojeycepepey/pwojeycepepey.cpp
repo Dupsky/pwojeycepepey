@@ -23,21 +23,23 @@ int main()
 
     sommet1.link(sommet2, arc1, arc2);
     sommet1.link(sommet3, arc3, arc4);
-    sommet1.link(sommet4, arc5, arc6);
+    //sommet1.link(sommet4, arc5, arc6);
+
+
+    
 
 
     sommet1.AfficherTabs();
-  
-    Cgraphe graphe = Cgraphe();
+    sommet2.AfficherTabs();
 
-    graphe.addSommet(sommet1);
-    graphe.addSommet(sommet2);
-    graphe.addSommet(sommet3);
-    graphe.addSommet(sommet4);
+    sommet1.unlink(sommet2);
 
-    graphe.AfficherGraph();
+    sommet1.AfficherTabs();
+    sommet2.AfficherTabs();
 
-    std::cout << "debut fin" << std::endl;
+    //sommet1.suppArcArrivant(&arc1);
+
+    //sommet1.AfficherTabs();
 
     //sommet1.SOMModifierNum(3);
 
