@@ -79,17 +79,21 @@ Csommet::Csommet(unsigned int uiArg)
 *Sortie :
 *Entraîne :
 ********************************************************************/
-void Csommet::link(Csommet &sommet, Carc &arc1, Carc &arc2)
+void Csommet::link(Csommet &sommet)
 {
-	std::cout << "création lien entre le sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << std::endl;
+	std::cout << "creation lien entre le sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
 
-	arc1.ARCModifDest(sommet.AfficherNum());
+	Carc* arc1 = new Carc(sommet.AfficherNum());
+	Carc* arc2 = new Carc(this->AfficherNum());
 
-	this->SOMArcPartant(&arc1);
 
-	arc2.ARCModifDest(this->AfficherNum());
+	//arc1.ARCModifDest(sommet.AfficherNum());
 
-	sommet.SOMArcArrivant(&arc2);
+	this->SOMArcPartant(arc1);
+
+	//arc2.ARCModifDest(this->AfficherNum());
+
+	sommet.SOMArcArrivant(arc2);
 
 	
 	
@@ -105,7 +109,7 @@ void Csommet::link(Csommet &sommet, Carc &arc1, Carc &arc2)
 
 void Csommet::unlink(Csommet& sommet)
 {
-	std::cout << "suppression du lien entre le sommet " << this->AfficherNum() << " et le sommet " << sommet.AfficherNum() << std::endl;
+	std::cout << "suppression du lien entre le sommet " << this->AfficherNum() << " et le sommet " << sommet.AfficherNum() << "\n" << std::endl;
 
 	if(this->islink(sommet)) { //il y a un lien de 1 vers 2
 
@@ -391,7 +395,7 @@ void Csommet::suppArcPartant(Carc* ARCArg)
 void Csommet::AfficherTabs() {
 	int i = 0;
 
-	std::cout << "Tableau partant :" << std::endl;
+	std::cout << "Sommet n = " << this->AfficherNum() << " :\n-> :" << std::endl;
 
 	while (i < this->iSOMPartant)
 	{
@@ -401,13 +405,14 @@ void Csommet::AfficherTabs() {
 
 	i = 0;
 
-	std::cout << "Tableau arrivant :" << std::endl;
+	std::cout << "\n<- :" << std::endl;
 
 	while (i < this->iSOMArrivant)
 	{
 		std::cout << "T[" << i << "] = " << this->SOMArrivant[i]->getDest() << std::endl;
 		i++;
 	}
+	std::cout << std::endl;
 }
 
 /*******************************************************************
@@ -428,7 +433,7 @@ void Csommet::SwitchLink(Csommet sommet)
 
 	if (!sommet.islink(*this) && this->islink(sommet)) {
 		this->unlink(sommet);
-		sommet.link(*this,arc1,arc2);
-	}*/
+		sommet.link(*this);
+	}
 }
 

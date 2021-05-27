@@ -16,7 +16,7 @@ public:
 
 	void AfficherArcsPartant();
 
-	void link(Csommet &sommet, Carc &arc1, Carc &arc2);
+	void link(Csommet &sommet);
 	void unlink(Csommet& sommet);
 
 	Carc* TrouverArcPartant(unsigned int destination);
