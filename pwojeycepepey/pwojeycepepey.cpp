@@ -24,16 +24,18 @@ int main()
     sommet1.link(sommet2, arc1, arc2);
     sommet1.link(sommet3, arc3, arc4);
     sommet1.link(sommet4, arc5, arc6);
-    sommet2.SOMArcArrivant(&arc2);
-    sommet2.SOMArcArrivant(&arc2);
-    sommet2.SOMArcArrivant(&arc2);
-    sommet2.SOMArcArrivant(&arc2);
-    sommet2.SOMArcArrivant(&arc2);
-    sommet2.SOMArcArrivant(&arc2);
+
 
     sommet1.AfficherTabs();
   
+    Cgraphe graphe = Cgraphe();
 
+    graphe.addSommet(sommet1);
+    graphe.addSommet(sommet2);
+    graphe.addSommet(sommet3);
+    graphe.addSommet(sommet4);
+
+    graphe.AfficherGraph();
 
     std::cout << "debut fin" << std::endl;
 

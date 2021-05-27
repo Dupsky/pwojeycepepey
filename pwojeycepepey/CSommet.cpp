@@ -79,7 +79,7 @@ Csommet::Csommet(unsigned int uiArg)
 *Sortie :
 *Entraîne :
 ********************************************************************/
-void Csommet::link(Csommet sommet, Carc &arc1, Carc &arc2)
+void Csommet::link(Csommet &sommet, Carc &arc1, Carc &arc2)
 {
 	std::cout << "lien entre le sommet " << this->AfficherNum() << " et le sommet " << sommet.AfficherNum() << std::endl;
 
@@ -278,6 +278,27 @@ void Csommet::AfficherTabs() {
 	{
 		std::cout << "T[" << i << "] = " << this->SOMArrivant[i]->getDest() << std::endl;
 		i++;
+	}
+}
+
+/*******************************************************************
+*  Inverse 2 sommets
+********************************************************************
+*Entrée : L'objet pointé est de la classe Csommet
+*		  Un objet de la classe CSommet
+*Sortie : void
+*Entraîne : L'inversion des deux arcs reliant les sommets 
+*			(uniquement l'arc partant de l'objet pointé)
+********************************************************************/
+
+void Csommet::SwitchLink(Csommet sommet)
+{
+	Carc  arc1 = Carc();
+	Carc arc2 = Carc();
+
+	if (!sommet.islink(*this) && this->islink(sommet)) {
+		this->unlink(sommet);
+		sommet.link(*this,arc1,arc2);
 	}
 }
 

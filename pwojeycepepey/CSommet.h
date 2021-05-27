@@ -14,7 +14,7 @@ public:
 	~Csommet();
 	unsigned int AfficherNum();
 	void AfficherArcsPartant();
-	void link(Csommet sommet, Carc &arc1, Carc &arc2);
+	void link(Csommet &sommet, Carc &arc1, Carc &arc2);
 	void SOMModifierNum(unsigned int uiArg);
 	void SOMArcArrivant(Carc * ARCArg);
 	void SOMArcPartant(Carc * ARCArg);
@@ -23,5 +23,6 @@ public:
 	int tailleArrivant();
 	int taillePartant();
 	void AfficherTabs();
+	void SwitchLink(Csommet sommet);
 };
 
