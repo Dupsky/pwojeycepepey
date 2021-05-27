@@ -135,7 +135,7 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 *Entraîne : La récuperation de la taille du tableau de arrivant de
 *			l'objet pointé
 ********************************************************************/
-/*int Csommet::tailleArrivant()
+int Csommet::tailleArrivant()
 {
 	return (sizeof(this->SOMArrivant) / sizeof(*this->SOMArrivant)) ;
 }*/
@@ -148,7 +148,7 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 *Entraîne : La récuperation de las taille du tableau de partant de
 *			l'objet pointé
 ********************************************************************/
-/*int Csommet::taillePartant()
+int Csommet::taillePartant()
 {
 	return (sizeof(this->SOMPartant) / sizeof(*this->SOMPartant));
 }
@@ -164,7 +164,24 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 ********************************************************************/
 void Csommet::suppArcArrivant(Carc * ARCArg)
 {
+	Carc** temp = this->SOMPartant;
+	int i = 0;
+	int temp_taille = this->iSOMPartant;
 
+	while (this->SOMPartant[i] != ARCArg || i <= temp_taille) {
+		i++;
+	}
+
+	while (i < temp_taille) {
+		this->SOMPartant[i] = this->SOMPartant[i + 1];
+	}
+
+	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) - sizeof(ARCArg))) {
+		std::cout << "realloc réussi" << std::endl;
+	}
+	else {
+		std::cout << "realloc non réussi" << std::endl;
+	}
 }
 
 /*******************************************************************

@@ -20,8 +20,8 @@ public:
 	void SOMArcPartant(Carc * ARCArg);
 	void suppArcPartant(Carc* ARCArg);
 	void suppArcArrivant(Carc* ARCArg);
-	//int tailleArrivant();
-	//int taillePartant();
+	int tailleArrivant();
+	int taillePartant();
 	void AfficherTabs();
 };
 
