@@ -39,7 +39,7 @@ int main()
     Csommet sommet1(1);
     Csommet sommet2(2);
 
-    somme
+   // somme
 
     sommet1.SOMModifierNum(3);
 
