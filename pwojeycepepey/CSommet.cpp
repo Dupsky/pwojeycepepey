@@ -34,16 +34,24 @@ unsigned int Csommet::AfficherNum()
 	return this->uiSOMNumSom;
 }
 
+
 /*******************************************************************
-*
+*  Affichage des arcs partant du sommet
 ********************************************************************
-*Entrée :
-*Sortie :
-*Entraîne :
+*Entrée : L'objet pointé est de la classe Csommet
+*Sortie : void
+*Entraîne : Affichages des arcs partant du sommet
 ********************************************************************/
 
 void Csommet::AfficherArcsPartant()
 {
+	int i = 0;
+
+	while (i < this->iSOMPartant)
+	{
+		std::cout << this->uiSOMNumSom << "->" << this->SOMPartant[i]->getDest() << " ; ";
+		i++;
+	}
 
 }
 
@@ -273,22 +281,3 @@ void Csommet::AfficherTabs() {
 	}
 }
 
-/*******************************************************************
-*  Affichage des arcs partant du sommet
-********************************************************************
-*Entrée : L'objet pointé est de la classe Csommet
-*Sortie : void
-*Entraîne : Affichages des arcs partant du sommet
-********************************************************************/
-
-void Csommet::AfficherArcsPartant() 
-{
-	int i = 0;
-
-	while (i < this->iSOMPartant)
-	{
-		std::cout << this->uiSOMNumSom << "->" << this->SOMPartant[i]->getDest()<<" ; ";
-		i++;
-	}
-
-}
