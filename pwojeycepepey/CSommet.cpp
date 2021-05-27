@@ -78,21 +78,127 @@ Csommet::Csommet(unsigned int uiArg)
 *Sortie :
 *Entraîne :
 ********************************************************************/
-void Csommet::link(Csommet sommet, Carc &arc1, Carc &arc2)
+void Csommet::link(Csommet &sommet, Carc &arc1, Carc &arc2)
 {
-	std::cout << "lien entre le sommet " << this->AfficherNum() << " et le sommet " << sommet.AfficherNum() << std::endl;
+	std::cout << "création lien entre le sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << std::endl;
 
 	arc1.ARCModifDest(sommet.AfficherNum());
 
 	this->SOMArcPartant(&arc1);
-	sommet.SOMArcArrivant(&arc1);
 
 	arc2.ARCModifDest(this->AfficherNum());
 
-	sommet.SOMArcPartant(&arc2);
-	this->SOMArcArrivant(&arc2);
+	sommet.SOMArcArrivant(&arc2);
+
 	
 	
+}
+
+/*******************************************************************
+*
+********************************************************************
+*Entrée :
+*Sortie :
+*Entraîne :
+********************************************************************/
+
+void Csommet::unlink(Csommet& sommet)
+{
+	std::cout << "suppression du lien entre le sommet " << this->AfficherNum() << " et le sommet " << sommet.AfficherNum() << std::endl;
+
+	if(this->islink(sommet)) { //il y a un lien de 1 vers 2
+
+		//suppression arc dans le sommet 1 (partant avec destination = 2)
+		this->suppArcPartant(this->TrouverArcPartant(sommet.AfficherNum()));
+
+		//suppression arc dans le sommet 2 (arrivant avec destination = 1)
+		sommet.suppArcArrivant(sommet.TrouverArcArrivant(this->AfficherNum()));
+	}
+
+
+}
+
+/*******************************************************************
+*
+********************************************************************
+*Entrée :
+*Sortie :
+*Entraîne :
+********************************************************************/
+
+Carc* Csommet::TrouverArcPartant(unsigned int destination)
+{
+	int i = 0;
+	int indice = -1;
+	//cherche dans le tableau arc partant l'arc avec la bonne destination
+
+	while (i < this->iSOMPartant)
+	{
+		if (this->SOMPartant[i]->getDest() == destination) {
+			indice = i;
+		}
+		i++;
+	}
+
+	if (indice != -1 && this->SOMPartant[indice]->getDest() == destination)
+	{
+		return this->SOMPartant[indice];
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+/*******************************************************************
+*
+********************************************************************
+*Entrée :
+*Sortie :
+*Entraîne :
+********************************************************************/
+
+Carc* Csommet::TrouverArcArrivant(unsigned int destination)
+{
+	int i = 0;
+	int indice = -1;
+	//cherche dans le tableau arc partant l'arc avec la bonne destination
+
+	while (i < this->iSOMArrivant)
+	{
+		if (this->SOMArrivant[i]->getDest() == destination) {
+			indice = i;
+		}
+		i++;
+	}
+
+	if (indice != -1 && this->SOMArrivant[indice]->getDest() == destination)
+	{
+		return this->SOMArrivant[indice];
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+/*******************************************************************
+*
+********************************************************************
+*Entrée :
+*Sortie :
+*Entraîne :
+********************************************************************/
+
+int Csommet::islink(Csommet sommet)
+{
+	if (this->TrouverArcPartant(sommet.AfficherNum()) != nullptr) {
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 /*******************************************************************
@@ -198,24 +304,37 @@ int Csommet::taillePartant()
 ********************************************************************/
 void Csommet::suppArcArrivant(Carc * ARCArg)
 {
-	Carc** temp = this->SOMPartant;
+	Carc** tmp = this->SOMArrivant;
 	int i = 0;
-	int temp_taille = this->iSOMPartant;
+	int indice = -1;
+	int temp_taille = this->iSOMArrivant;
 
-	while (this->SOMPartant[i] != ARCArg || i <= temp_taille) {
+	while (i < temp_taille) {
+		if (this->SOMArrivant[i] == ARCArg) {
+			indice = i;
+		}
 		i++;
 	}
 
-	while (i < temp_taille) {
-		this->SOMPartant[i] = this->SOMPartant[i + 1];
+	if (indice != -1) { //element bien présent 
+
+		while (indice < temp_taille) {
+			tmp[indice] = tmp[indice + 1];
+			indice++;
+		}
+
+		tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->taillePartant() - 1) * (size_t)sizeof(ARCArg));
+
+
+		if (tmp != nullptr || this->iSOMArrivant == 1) {
+			this->SOMArrivant = tmp;
+			this->iSOMArrivant--;
+		}
+		else {
+			std::cout << "realloc non réussi" << std::endl;
+		}
 	}
 
-	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) - sizeof(ARCArg))) {
-		std::cout << "realloc réussi" << std::endl;
-	}
-	else {
-		std::cout << "realloc non réussi" << std::endl;
-	}
 }
 
 /*******************************************************************
@@ -229,23 +348,33 @@ void Csommet::suppArcArrivant(Carc * ARCArg)
 ********************************************************************/
 void Csommet::suppArcPartant(Carc* ARCArg)
 {
-	Carc** temp = this->SOMPartant;
+	Carc** tmp = this->SOMPartant;
 	int i = 0;
+	int indice = -1;
 	int temp_taille = this->iSOMPartant;
 
-	while (this->SOMPartant[i] != ARCArg || i <= temp_taille) {
+	while (i < temp_taille) {
+		if (this->SOMPartant[i] == ARCArg) {
+			indice = i;
+		}
 		i++;
 	}
 
-	while (i < temp_taille) {
-		this->SOMPartant[i] = this->SOMPartant[i+1];
-	}
+	if (indice != -1) { //element bien présent 
 
-	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) - sizeof(ARCArg))) {
-		std::cout << "realloc réussi" << std::endl;
-	}
-	else {
-		std::cout << "realloc non réussi" << std::endl;
+		while (indice < temp_taille) {
+			tmp[indice] = tmp[indice + 1];
+			indice++;
+		}
+
+		tmp = (Carc**)realloc(this->SOMPartant, ((size_t)this->taillePartant() - 1) * (size_t)sizeof(ARCArg));
+		if (tmp != nullptr || this->iSOMArrivant == 1) {
+			this->SOMPartant = tmp;
+			this->iSOMPartant--;
+		}
+		else {
+			std::cout << "realloc non réussi" << std::endl;
+		}
 	}
 }
 

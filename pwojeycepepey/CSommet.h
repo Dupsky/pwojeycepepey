@@ -13,15 +13,28 @@ public:
 	Csommet(unsigned int uiArg);
 	~Csommet();
 	unsigned int AfficherNum();
+
 	void AfficherArcsPartant();
-	void link(Csommet sommet, Carc &arc1, Carc &arc2);
+
+	void link(Csommet &sommet, Carc &arc1, Carc &arc2);
+	void unlink(Csommet& sommet);
+
+	Carc* TrouverArcPartant(unsigned int destination);
+	Carc* TrouverArcArrivant(unsigned int destination);
+
+	int islink(Csommet sommet);
+
 	void SOMModifierNum(unsigned int uiArg);
+
 	void SOMArcArrivant(Carc * ARCArg);
 	void SOMArcPartant(Carc * ARCArg);
+
 	void suppArcPartant(Carc* ARCArg);
 	void suppArcArrivant(Carc* ARCArg);
+
 	int tailleArrivant();
 	int taillePartant();
+
 	void AfficherTabs();
 };
 
