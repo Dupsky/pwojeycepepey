@@ -181,7 +181,24 @@ int Csommet::taillePartant()
 ********************************************************************/
 void Csommet::suppArcArrivant(Carc * ARCArg)
 {
+	Carc** temp = this->SOMPartant;
+	int i = 0;
+	int temp_taille = this->iSOMPartant;
 
+	while (this->SOMPartant[i] != ARCArg || i <= temp_taille) {
+		i++;
+	}
+
+	while (i < temp_taille) {
+		this->SOMPartant[i] = this->SOMPartant[i + 1];
+	}
+
+	if (realloc(this->SOMPartant, sizeof(this->SOMPartant) - sizeof(ARCArg))) {
+		std::cout << "realloc réussi" << std::endl;
+	}
+	else {
+		std::cout << "realloc non réussi" << std::endl;
+	}
 }
 
 /*******************************************************************
