@@ -1,4 +1,5 @@
 #include "CSommet.h"
+#include <malloc.h>
 #include <cstdlib>
 #include <iostream>
 #include <iterator>
@@ -103,10 +104,21 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 ********************************************************************/
 void Csommet::SOMArcArrivant(Carc *ARCArg)
 {
-	if (this->SOMArrivant = (Carc**)realloc(this->SOMPartant, (this->iSOMArrivant + 1) * sizeof(ARCArg))) {
-		this->iSOMArrivant = this->iSOMArrivant + 1;
-		this->SOMArrivant[this->iSOMArrivant] = ARCArg;
-	}
+	std::cout << "taille arrivant " << sizeof(this->SOMArrivant) << std::endl;
+
+
+		//Carc ** tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->tailleArrivant() + 1) * (size_t)sizeof(ARCArg));
+		Carc** tmp = (Carc**) realloc (this->SOMArrivant, (16));
+		if (tmp != nullptr) {
+			this->SOMArrivant = tmp;
+		}
+		else {
+			std::cout<<"err"<<std::endl;
+		}
+	
+	this->SOMArrivant[this->tailleArrivant()-1] = ARCArg;
+	std::cout << "taille arrivant apres " << sizeof(this->SOMArrivant) << std::endl;
+	this->nbElemArrivant++;
 }
 
 /*******************************************************************
@@ -120,11 +132,16 @@ void Csommet::SOMArcArrivant(Carc *ARCArg)
 ********************************************************************/
 void Csommet::SOMArcPartant(Carc *ARCArg)
 {
-	std::cout << ARCArg->getDest() << std::endl;
-	if (this->SOMPartant = (Carc**)realloc(this->SOMPartant,(this->iSOMPartant + 1) * sizeof(Carc *))) {
-		this->iSOMPartant = this->iSOMPartant + 1;
-		this->SOMPartant[this->iSOMPartant] = ARCArg;
-	}
+
+	
+		Carc** tmp = (Carc**)realloc(this->SOMPartant, ((size_t)this->taillePartant() + 1) * (size_t)sizeof(ARCArg));
+		if (tmp != nullptr)
+		{
+			this->SOMPartant = tmp;
+		}
+	
+	this->SOMPartant[this->taillePartant()] = ARCArg;
+	this->nbElemPartant++;
 }
 
 /*******************************************************************
@@ -137,8 +154,8 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 ********************************************************************/
 int Csommet::tailleArrivant()
 {
-	return (sizeof(this->SOMArrivant) / sizeof(*this->SOMArrivant)) ;
-}*/
+	return this->nbElemArrivant;
+}
 
 /*******************************************************************
 * Récupération de la taille du tableau Partant
@@ -150,7 +167,7 @@ int Csommet::tailleArrivant()
 ********************************************************************/
 int Csommet::taillePartant()
 {
-	return (sizeof(this->SOMPartant) / sizeof(*this->SOMPartant));
+	return this->nbElemPartant;
 }
 
 /*******************************************************************

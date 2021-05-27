@@ -4,6 +4,7 @@
 Cgraphe::Cgraphe()
 {
 	this->pGRATab = nullptr;
+	this->stTailleTab = 0;
 }
 
 void Cgraphe::addSommet(Csommet sommet)
