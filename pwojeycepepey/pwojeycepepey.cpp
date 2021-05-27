@@ -35,12 +35,11 @@ int main()
     Carc arc1(1);
     Carc arc2(2);
     Carc arc3(1);
-    Carc* tab[3];
+ 
     Csommet sommet1(1);
     Csommet sommet2(2);
-    sommet1.SOMArcArrivant(&arc1);
-    sommet1.SOMArcArrivant(&arc3);
-    sommet2.SOMArcArrivant(&arc2);
+
+    somme
 
     sommet1.SOMModifierNum(3);
 
