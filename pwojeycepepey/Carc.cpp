@@ -1,5 +1,10 @@
 #include "Carc.h"
 
+
+Carc::Carc() {
+	this->destination = 0;
+}
+
 Carc::Carc(unsigned int destination) {
 	this->destination = destination;
 }

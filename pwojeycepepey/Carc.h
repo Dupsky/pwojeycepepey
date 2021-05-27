@@ -4,6 +4,7 @@ class Carc
 private:
 	unsigned int destination;
 public:
+	Carc();
 	Carc(unsigned int destination);
 	~Carc();
 	void ARCModifDest(unsigned int uiArg);
