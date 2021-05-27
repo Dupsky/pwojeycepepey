@@ -27,7 +27,7 @@ int main()
     //std::cout << "dest arc 1 : " << arc1.getDest()  << std::endl;
     //std::cout << "dest arc 2 : " << arc2.getDest() << std::endl;
     // std::cout << "dest arc 3 : " << arc3.getDest() << std::endl;
-    
+    /*
     Csommet som1(1);
     Csommet som2(2);
   
@@ -48,9 +48,22 @@ int main()
     graphe.addSommet(som2);
 
     graphe.AfficherGraph();
+    */
+
+    Csommet som1= Csommet(1);
+    Csommet som2(2);
 
 
+    Carc arc1(1);
+    Carc arc2(2);
+    Carc arc3(1);
 
+    som1.SOMArcArrivant(&arc1);
+    som1.SOMArcArrivant(&arc3);
+    som2.SOMArcArrivant(&arc2);
+    som2.SOMArcPartant(&arc1);
+    som2.SOMArcPartant(&arc3);
+    som1.SOMArcPartant(&arc2);
             
 
 

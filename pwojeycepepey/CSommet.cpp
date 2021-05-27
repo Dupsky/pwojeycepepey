@@ -1,13 +1,16 @@
 #include "CSommet.h"
+#include <malloc.h>
 #include <cstdlib>
 #include <iostream>
 
 
 Csommet::Csommet()
 {
-	this->uiSOMNumSom=0;
-	this->SOMPartant=nullptr;
-	this->SOMArrivant=nullptr;
+	this->uiSOMNumSom = 0;
+	this->SOMPartant = nullptr;
+	this->SOMArrivant = nullptr;
+	this->nbElemArrivant = 0;
+	this->nbElemPartant = 0;
 }
 
 /*******************************************************************
@@ -39,6 +42,8 @@ Csommet::Csommet(unsigned int uiArg)
 	this->uiSOMNumSom = uiArg;
 	this->SOMPartant = nullptr;
 	this->SOMArrivant = nullptr;
+	this->nbElemArrivant = 0;
+	this->nbElemPartant = 0;
 }
 
 /*******************************************************************
@@ -91,9 +96,21 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 ********************************************************************/
 void Csommet::SOMArcArrivant(Carc *ARCArg)
 {
-	if (this->SOMArrivant = (Carc**)realloc(this->SOMPartant, (this->taillePartant() + 1) * sizeof(ARCArg))) {
-		this->SOMArrivant[this->tailleArrivant()] = ARCArg;
-	}
+	std::cout << "taille arrivant " << sizeof(this->SOMArrivant) << std::endl;
+
+
+		//Carc ** tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->tailleArrivant() + 1) * (size_t)sizeof(ARCArg));
+		Carc** tmp = (Carc**) realloc (this->SOMArrivant, (16));
+		if (tmp != nullptr) {
+			this->SOMArrivant = tmp;
+		}
+		else {
+			std::cout<<"err"<<std::endl;
+		}
+	
+	this->SOMArrivant[this->tailleArrivant()-1] = ARCArg;
+	std::cout << "taille arrivant apres " << sizeof(this->SOMArrivant) << std::endl;
+	this->nbElemArrivant++;
 }
 
 /*******************************************************************
@@ -107,9 +124,16 @@ void Csommet::SOMArcArrivant(Carc *ARCArg)
 ********************************************************************/
 void Csommet::SOMArcPartant(Carc *ARCArg)
 {
-	if (this->SOMPartant = (Carc**)realloc(this->SOMPartant, (this->taillePartant() + 1) * sizeof(ARCArg))) {
-		this->SOMPartant[this->taillePartant()] = ARCArg;
-	}
+
+	
+		Carc** tmp = (Carc**)realloc(this->SOMPartant, ((size_t)this->taillePartant() + 1) * (size_t)sizeof(ARCArg));
+		if (tmp != nullptr)
+		{
+			this->SOMPartant = tmp;
+		}
+	
+	this->SOMPartant[this->taillePartant()] = ARCArg;
+	this->nbElemPartant++;
 }
 
 /*******************************************************************
@@ -122,7 +146,7 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 ********************************************************************/
 int Csommet::tailleArrivant()
 {
-	return (sizeof(this->SOMArrivant) / sizeof(Carc*));
+	return this->nbElemArrivant;
 }
 
 /*******************************************************************
@@ -135,7 +159,7 @@ int Csommet::tailleArrivant()
 ********************************************************************/
 int Csommet::taillePartant()
 {
-	return (sizeof(this->SOMPartant) / sizeof(Carc*));
+	return this->nbElemPartant;
 }
 
 /*******************************************************************

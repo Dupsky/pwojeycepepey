@@ -6,6 +6,8 @@ private:
 	unsigned int uiSOMNumSom;
 	Carc ** SOMArrivant;
 	Carc ** SOMPartant;
+	int nbElemArrivant;
+	int nbElemPartant;
 public:
 	Csommet();
 	Csommet(unsigned int uiArg);
