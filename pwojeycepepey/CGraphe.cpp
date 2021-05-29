@@ -10,6 +10,11 @@ Cgraphe::Cgraphe()
 	this->stTailleTab = 0;
 }
 
+Cgraphe::~Cgraphe()
+{
+	delete[] this->pGRATab;
+}
+
 void Cgraphe::addSommet(Csommet * sommet)
 {
 	//this->AfficherGraph();
@@ -142,4 +147,12 @@ Csommet* Cgraphe::TrouverSommet(unsigned int uiArg)
 	{
 		return nullptr;
 	}
+}
+
+
+
+
+size_t Cgraphe::sizeofgraph()
+{
+	return sizeof(this->pGRATab);
 }

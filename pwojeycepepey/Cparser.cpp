@@ -64,27 +64,13 @@ void Cparser::LireFichier(Cgraphe* graphe)
 				strncpy_s(buffer, size, ligne.c_str(), size);
 
 				for (int i = 0; i < NBSommets; i++) {
-
-					if (i == 4) {
-						std::cout << "coucou" << std::endl;
-					}
-
 					//on enleve de notre buffer la partie 'variable = '
 					while (*buffer != '=') {
 						buffer++;
 					}
 					buffer++;
 
-					if (i == 3) {
-						std::cout << "sizeof tabgraph" << std::endl;
-					}
-					
-
 					graphe->createSommet(atoi(buffer));
-
-
-
-					graphe->AfficherGraph();
 
 					//on va a la ligne suivante i+1 fois
 					std::getline(MonFichier, ligne);
@@ -93,15 +79,12 @@ void Cparser::LireFichier(Cgraphe* graphe)
 					buffer = new char[size];
 
 					strncpy_s(buffer, size, ligne.c_str(), size);
-					std::cout << " buffer : " << buffer << std::endl;
 				}
 
 				break;
 
 
 			case 4: //création des arcs entre les sommets
-
-				std::cout << buffer << std::endl;
 
 				//ligne suivante
 				std::getline(MonFichier, ligne);
@@ -114,7 +97,6 @@ void Cparser::LireFichier(Cgraphe* graphe)
 
 				for (int j = 0; j < NBArcs; j++) {
 
-					std::cout  << " buffer : " << buffer << std::endl;
 
 					//on enleve de notre buffer la partie 'variable = '
 					while (*buffer != '=') {
@@ -130,7 +112,6 @@ void Cparser::LireFichier(Cgraphe* graphe)
 
 
 					while (*buffer != ',') {
-						std::cout << "incide : " << indiceNumero << " et buffer : " << buffer << std::endl;
 						buffer2[indiceNumero] = *buffer;
 						indiceNumero++;
 						buffer++;
@@ -151,7 +132,6 @@ void Cparser::LireFichier(Cgraphe* graphe)
 					Csommet* sommet1 = graphe->TrouverSommet(numsommet1);
 					Csommet* sommet2 = graphe->TrouverSommet(numsommet2);
 
-					std::cout << "lien entre sommet " << numsommet1 << " et sommet " << numsommet2 << std::endl;
 
 					sommet1->link(*sommet2);
 
