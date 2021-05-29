@@ -417,7 +417,7 @@ void Csommet::suppArcPartant(Carc* ARCArg)
 
 void Csommet::AfficherTabs() {
 	int i = 0;
-
+	
 	std::cout << "Sommet n = " << this->AfficherNum() << " :\n-> :" << std::endl;
 
 	while (i < this->iSOMPartant)
