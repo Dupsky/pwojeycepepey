@@ -328,7 +328,7 @@ void Csommet::suppArcArrivant(Carc * ARCArg)
 			indice++;
 		}
 
-		tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->taillePartant() - 1) * (size_t)sizeof(ARCArg));
+		tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->tailleArrivant() - 1) * (size_t)sizeof(ARCArg));
 
 
 		if (tmp != nullptr || this->iSOMArrivant == 1) {
