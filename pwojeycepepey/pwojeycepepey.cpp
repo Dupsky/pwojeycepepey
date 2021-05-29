@@ -24,6 +24,8 @@ int main()
 
     graphe.InverserGraph();
 
+    //graphe.TrouverSommet(2)->AfficherArcsPartant();
+   // graphe.TrouverSommet(3)->AfficherArcsPartant();
     graphe.AfficherGraph();
 
 
