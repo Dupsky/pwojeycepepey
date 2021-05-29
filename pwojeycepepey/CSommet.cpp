@@ -81,7 +81,7 @@ Csommet::Csommet(unsigned int uiArg)
 ********************************************************************/
 void Csommet::link(Csommet &sommet)
 {
-	std::cout << "creation lien entre le sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
+	//std::cout << "creation du lien du sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
 
 	Carc* arc1 = new Carc(sommet.AfficherNum());
 	Carc* arc2 = new Carc(this->AfficherNum());
@@ -109,7 +109,7 @@ void Csommet::link(Csommet &sommet)
 
 void Csommet::unlink(Csommet& sommet)
 {
-	std::cout << "suppression du lien entre le sommet " << this->AfficherNum() << " et le sommet " << sommet.AfficherNum() << "\n" << std::endl;
+	//std::cout << "suppression du lien du sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
 
 	if(this->islink(sommet)) { //il y a un lien de 1 vers 2
 
@@ -122,6 +122,29 @@ void Csommet::unlink(Csommet& sommet)
 
 
 }
+
+/*******************************************************************
+*  Inverse 2 sommets
+********************************************************************
+*Entrée : L'objet pointé est de la classe Csommet
+*		  Un objet de la classe CSommet
+*Sortie : void
+*Entraîne : L'inversion des deux arcs reliant les sommets
+*			(uniquement l'arc partant de l'objet pointé)
+********************************************************************/
+
+void Csommet::SwitchLink(Csommet sommet)
+{
+	Carc  arc1 = Carc();
+	Carc arc2 = Carc();
+
+	if (!sommet.islink(*this) && this->islink(sommet)) {
+		this->unlink(sommet);
+		sommet.link(*this);
+	}
+}
+
+
 
 /*******************************************************************
 *
@@ -415,22 +438,5 @@ void Csommet::AfficherTabs() {
 	std::cout << std::endl;
 }
 
-/*******************************************************************
-*  Inverse 2 sommets
-********************************************************************
-*Entrée : L'objet pointé est de la classe Csommet
-*		  Un objet de la classe CSommet
-*Sortie : void
-*Entraîne : L'inversion des deux arcs reliant les sommets 
-*			(uniquement l'arc partant de l'objet pointé)
-********************************************************************/
 
-void Csommet::SwitchLink(Csommet sommet)
-{
-
-	if (!sommet.islink(*this) && this->islink(sommet)) {
-		this->unlink(sommet);
-		sommet.link(*this);
-	}
-}
 
