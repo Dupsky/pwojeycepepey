@@ -26,7 +26,8 @@ Csommet::Csommet()
 ********************************************************************/
 Csommet::~Csommet()
 {
-
+	delete[] this->SOMPartant;
+	delete[] this->SOMArrivant;
 }
 
 unsigned int Csommet::AfficherNum()
@@ -263,10 +264,10 @@ void Csommet::SOMArcArrivant(Carc *ARCArg)
 		//Carc ** tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->tailleArrivant() + 1) * (size_t)sizeof(ARCArg));
 
 
-		Carc** tmp = (Carc**) realloc (this->SOMArrivant, ((size_t)this->taillePartant() + 1) * (size_t)sizeof(ARCArg));
-		if (tmp != nullptr) {
-			this->SOMArrivant = tmp;
-		}
+	Carc** tmp = (Carc**) realloc (this->SOMArrivant, ((size_t)this->taillePartant() + 1) * (size_t)sizeof(ARCArg));
+	if (tmp != nullptr) {
+		this->SOMArrivant = tmp;
+	}
 	
 	this->SOMArrivant[this->tailleArrivant()] = ARCArg;
 	this->iSOMArrivant++;
