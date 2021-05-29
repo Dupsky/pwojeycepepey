@@ -427,9 +427,6 @@ void Csommet::AfficherTabs() {
 
 void Csommet::SwitchLink(Csommet sommet)
 {
-	
-	Carc  arc1 = Carc();
-	Carc arc2 = Carc();
 
 	if (!sommet.islink(*this) && this->islink(sommet)) {
 		this->unlink(sommet);
