@@ -16,13 +16,13 @@ public:
 
 	void AfficherArcsPartant();
 
-	void link(Csommet &sommet);
-	void unlink(Csommet& sommet);
+	void link(Csommet * sommet);
+	void unlink(Csommet * sommet);
 
 	Carc* TrouverArcPartant(unsigned int destination);
 	Carc* TrouverArcArrivant(unsigned int destination);
 
-	int islink(Csommet sommet);
+	int islink(Csommet * sommet);
 
 	void SOMModifierNum(unsigned int uiArg);
 
@@ -36,6 +36,6 @@ public:
 	int taillePartant();
 
 	void AfficherTabs();
-	void SwitchLink(Csommet sommet);
+	void SwitchLink(Csommet * sommet);
 };
 

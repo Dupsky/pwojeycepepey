@@ -12,7 +12,7 @@ Cgraphe::Cgraphe()
 
 Cgraphe::~Cgraphe()
 {
-	delete[] this->pGRATab;
+	free(this->pGRATab);
 }
 
 void Cgraphe::addSommet(Csommet * sommet)
@@ -62,7 +62,7 @@ void Cgraphe::InverserGraph()
 		for (int j = 0; j < this->stTailleTab; j++)
 		{
 			if (j > i) {
-				this->pGRATab[i]->SwitchLink(*this->pGRATab[j]);
+				this->pGRATab[i]->SwitchLink(this->pGRATab[j]);
 			}
 		}
 	}
