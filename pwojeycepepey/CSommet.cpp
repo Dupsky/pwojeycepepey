@@ -427,7 +427,7 @@ void Csommet::AfficherTabs() {
 
 void Csommet::SwitchLink(Csommet sommet)
 {
-	/*
+	
 	Carc  arc1 = Carc();
 	Carc arc2 = Carc();
 

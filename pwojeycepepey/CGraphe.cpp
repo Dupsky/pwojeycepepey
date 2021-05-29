@@ -10,11 +10,11 @@ Cgraphe::Cgraphe()
 	this->stTailleTab = 0;
 }
 
-void Cgraphe::addSommet(Csommet sommet)
+void Cgraphe::addSommet(Csommet * sommet)
 {
 	for (int i = 0; i < this->stTailleTab; i++)
 	{
-		if (this->pGRATab[i].AfficherNum()==sommet.AfficherNum())
+		if (this->pGRATab[i]->AfficherNum()==sommet->AfficherNum())
 		{
 			CException EXCObj;
 			EXCObj.EXCset(sommetPresent);
@@ -22,8 +22,8 @@ void Cgraphe::addSommet(Csommet sommet)
 		}
 	}
 
-	Csommet* temp = (Csommet*)realloc(this->pGRATab, (size_t)sizeof(this->pGRATab) + (size_t)sizeof(sommet));
-	if (temp != nullptr)
+	Csommet** temp = (Csommet**)realloc(this->pGRATab, (size_t)sizeof(this->pGRATab) + (size_t)sizeof(sommet));
+	if (temp == nullptr)
 	{
 		CException EXCObj;
 		EXCObj.EXCset(reallocImpo);
@@ -42,10 +42,9 @@ void Cgraphe::AfficherGraph()
 	int pos=0;
 	std::cout << "Liste des sommets du graphique et leurs arcs partant" << std::endl;
 	for (pos; pos < this->stTailleTab; pos++) {
-		std::cout << "Sommet " << this->pGRATab->AfficherNum() << ": ";
-		this->pGRATab->AfficherArcsPartant();
+		std::cout << "Sommet " << this->pGRATab[pos]->AfficherNum() << ": ";
+		this->pGRATab[pos]->AfficherArcsPartant();
 		std::cout << std::endl;
-		++this->pGRATab;
 	}
 }
 
@@ -56,7 +55,7 @@ void Cgraphe::InverserGraph()
 		for (int j = 0; j < this->stTailleTab; j++)
 		{
 			if (j > i) {
-				this->pGRATab[i].SwitchLink(this->pGRATab[j]);
+				this->pGRATab[i]->SwitchLink(*this->pGRATab[j]);
 			}
 		}
 	}
@@ -67,12 +66,12 @@ size_t Cgraphe::tailleTab()
 	return this->stTailleTab;
 }
 
-void Cgraphe::SuppSommetIndex(int iArg)
+void Cgraphe::SuppSommetIndex(unsigned int iArg)
 {
 
 }
 
-void Cgraphe::SuppSommetNum(int iArg)
+void Cgraphe::SuppSommetNum(unsigned int iArg)
 {/*
 	int iTemp = 0;
 	for (int i = 0; i < this->stTailleTab; i++)
@@ -110,4 +109,35 @@ void Cgraphe::SuppSommetNum(int iArg)
 		this->pGRATab = temp;
 	}
 */
+}
+
+void Cgraphe::createSommet(unsigned int uiArg)
+{
+	Csommet * sommet =new Csommet(uiArg);
+
+	this->addSommet(sommet);
+}
+
+Csommet* Cgraphe::TrouverSommet(unsigned int uiArg)
+{
+	int i = 0;
+	int indice = -1;
+	//cherche dans le tableau arc partant l'arc avec la bonne destination
+
+	while (i < this->stTailleTab)
+	{
+		if (this->pGRATab[i]->AfficherNum() == uiArg) {
+			indice = i;
+		}
+		i++;
+	}
+
+	if (indice != -1 && this->pGRATab[indice]->AfficherNum() == uiArg)
+	{
+		return this->pGRATab[indice];
+	}
+	else
+	{
+		return nullptr;
+	}
 }

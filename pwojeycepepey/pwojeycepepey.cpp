@@ -7,6 +7,25 @@
 int main()
 {
 
+    Cgraphe graphe= Cgraphe();
+
+
+    graphe.createSommet(1);
+
+    graphe.createSommet(2);
+
+    graphe.createSommet(3);
+
+    graphe.TrouverSommet(1)->link(graphe.TrouverSommet(2))
+
+
+    
+    graphe.AfficherGraph();
+
+
+
+
+
     /*
     Csommet sommet1(1);
     Csommet sommet2(2);
@@ -20,7 +39,7 @@ int main()
 
     
 
-    /*
+    
     sommet1.AfficherTabs();
     sommet2.AfficherTabs();
 
@@ -28,14 +47,14 @@ int main()
 
     sommet1.AfficherTabs();
     sommet2.AfficherTabs();
-    */
+    
     //sommet1.suppArcArrivant(&arc1);
 
     //sommet1.AfficherTabs();
 
     //sommet1.SOMModifierNum(3);
 
-
+    */
 
       
             
