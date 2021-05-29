@@ -5,16 +5,18 @@
 class Cgraphe
 {
 private:
-	Csommet* pGRATab;
+	Csommet** pGRATab;
 	size_t stTailleTab;
 public:
 	Cgraphe();
-	void addSommet(Csommet sommet);
+	void addSommet(Csommet * sommet);
+	void createSommet(unsigned int uiArg);
 	size_t tailleTab();
 	void AfficherGraph();
 	void InverserGraph();
-	void SuppSommetIndex(int iArg);
-	void SuppSommetNum(int iArg);
+	void SuppSommetIndex(unsigned int iArg);
+	void SuppSommetNum(unsigned int iArg);
+	Csommet* TrouverSommet(unsigned int iArg);
 };
 
 ///////////erreurs///////////////
