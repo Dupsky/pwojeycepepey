@@ -1,11 +1,14 @@
 #pragma once
+#include "CGraphe.h"
+
 class Cparser
 {
 private:
 	const char* cNomfichier;
 
 public:
-	void LireFichier(const char* cNomfichier);
+	Cparser(const char* cNomfichier);
+	void LireFichier(Cgraphe* graphe);
 
 };
 

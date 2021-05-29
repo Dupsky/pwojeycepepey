@@ -8,9 +8,17 @@
 #include "CGraphe.h"
 
 
-void Cparser::LireFichier(const char* cNomfichier)
+
+Cparser::Cparser(const char* cNomfichier)
 {
-	std::ifstream MonFichier(cNomfichier);
+	this->cNomfichier = cNomfichier;
+}
+
+void Cparser::LireFichier(Cgraphe* graphe)
+{
+
+
+	std::ifstream MonFichier(this->cNomfichier);
 
 	int num_ligne = 0;
 	int NBSommets = 0;
@@ -46,48 +54,121 @@ void Cparser::LireFichier(const char* cNomfichier)
 				NBArcs = atoi(buffer);
 
 				break;
-			case 3: //numero des sommets
+			case 3: //création des sommets avec leur numero
 
 				std::getline(MonFichier, ligne);
-				num_ligne++;
+
+				size = ligne.size() + 1;
+				buffer = new char[size];
+
+				strncpy_s(buffer, size, ligne.c_str(), size);
 
 				for (int i = 0; i < NBSommets; i++) {
 
-					//on enleve de notre buffer la partie 'variable = '
-					if (num_ligne <= 3) {
-						while (*buffer != '=') {
-							buffer++;
-						}
-						buffer++;
+					if (i == 4) {
+						std::cout << "coucou" << std::endl;
 					}
 
+					//on enleve de notre buffer la partie 'variable = '
+					while (*buffer != '=') {
+						buffer++;
+					}
+					buffer++;
+
+					if (i == 3) {
+						std::cout << "sizeof tabgraph" << std::endl;
+					}
+					
+
+					graphe->createSommet(atoi(buffer));
 
 
 
+					graphe->AfficherGraph();
 
 					//on va a la ligne suivante i+1 fois
 					std::getline(MonFichier, ligne);
-					num_ligne++;
 
+					size = ligne.size() + 1;
+					buffer = new char[size];
 
+					strncpy_s(buffer, size, ligne.c_str(), size);
+					std::cout << " buffer : " << buffer << std::endl;
 				}
 
 				break;
-			case 4: //debut et fin des arcs
 
-				while (MonFichier >> buffer) {
-					if (sTempColonne == this->sMATNbColonnes) { //derniere valeur de la ligne, il faut passer a la ligne suivante
-						sTempColonne = 0;
-						sTempLigne++;
+
+			case 4: //création des arcs entre les sommets
+
+				std::cout << buffer << std::endl;
+
+				//ligne suivante
+				std::getline(MonFichier, ligne);
+
+				size = ligne.size() + 1;
+				buffer = new char[size];
+
+
+				strncpy_s(buffer, size, ligne.c_str(), size);
+
+				for (int j = 0; j < NBArcs; j++) {
+
+					std::cout  << " buffer : " << buffer << std::endl;
+
+					//on enleve de notre buffer la partie 'variable = '
+					while (*buffer != '=') {
+						buffer++;
 					}
-					if (sTempLigne < this->sMATNbLignes) {
-						dTempValeur = std::atof(buffer);
-						this->mMatrice[sTempLigne][sTempColonne] = dTempValeur;
-						sTempColonne++;
+					buffer++;
+
+					//on recupere le premier numero dans buffer2
+
+					char* buffer2 = new char[10];
+					int indiceNumero = 0;
+
+
+
+					while (*buffer != ',') {
+						std::cout << "incide : " << indiceNumero << " et buffer : " << buffer << std::endl;
+						buffer2[indiceNumero] = *buffer;
+						indiceNumero++;
+						buffer++;
 					}
+					int numsommet1 = atoi(buffer2);
+		
+
+					//on enleve de notre buffer la partie ', variable = '
+					while (*buffer != '=') {
+						buffer++;
+					}
+					buffer++;
+
+					int numsommet2 = atoi(buffer);
+
+					//on link les 2 sommets
+
+					Csommet* sommet1 = graphe->TrouverSommet(numsommet1);
+					Csommet* sommet2 = graphe->TrouverSommet(numsommet2);
+
+					std::cout << "lien entre sommet " << numsommet1 << " et sommet " << numsommet2 << std::endl;
+
+					sommet1->link(*sommet2);
+
+					
+
+					//on va a la ligne suivante i+1 fois
+					std::getline(MonFichier, ligne);
+
+					size = ligne.size() + 1;
+					buffer = new char[size];
+
+					strncpy_s(buffer, size, ligne.c_str(), size);
 				}
+
 				break;
 			}
 		}
 	}
 }
+

@@ -12,6 +12,8 @@ Cgraphe::Cgraphe()
 
 void Cgraphe::addSommet(Csommet * sommet)
 {
+	//this->AfficherGraph();
+
 	for (int i = 0; i < this->stTailleTab; i++)
 	{
 		if (this->pGRATab[i]->AfficherNum()==sommet->AfficherNum())
@@ -33,7 +35,9 @@ void Cgraphe::addSommet(Csommet * sommet)
 		this->pGRATab = temp;
 	}
 	
-	if (this->pGRATab != nullptr) this->pGRATab[this->stTailleTab] = sommet;
+	if (this->pGRATab != nullptr) {
+		this->pGRATab[this->stTailleTab] = sommet;
+	}
 	stTailleTab++;
 }
 
@@ -122,7 +126,7 @@ Csommet* Cgraphe::TrouverSommet(unsigned int uiArg)
 {
 	int i = 0;
 	int indice = -1;
-	//cherche dans le tableau arc partant l'arc avec la bonne destination
+	//cherche dans le tableau le sommet avec le bon numero
 
 	while (i < this->stTailleTab)
 	{
