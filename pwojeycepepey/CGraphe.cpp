@@ -76,47 +76,68 @@ size_t Cgraphe::tailleTab()
 
 void Cgraphe::SuppSommetIndex(unsigned int iArg)
 {
-
-}
-
-void Cgraphe::SuppSommetNum(unsigned int iArg)
-{/*
-	int iTemp = 0;
-	for (int i = 0; i < this->stTailleTab; i++)
-	{
-		if (this->pGRATab[i].AfficherNum() == iArg)
-		{
-			iTemp++;
-		}
-	}
-	if (iTemp == 0) {
+	int iBoucle = 0;
+	
+	if (iArg > this->stTailleTab-1) {
 		CException EXCObj;
-		EXCObj.EXCset(sommetNonPresent);
+		EXCObj.EXCset(argHorsLimite);
 		throw(EXCObj);
 	}
-	for (int i = 0; i < this->stTailleTab; i++)
+	for (iBoucle = iArg; iBoucle < this->stTailleTab; iBoucle++)
 	{
+		this->pGRATab[iBoucle] = this->pGRATab[iBoucle + 1];
 
-		if (this->pGRATab[i].AfficherNum() == iArg) {
-			for (int j = i+1; j < this->stTailleTab; j++)
-			{
-				this->pGRATab[i] = this->pGRATab[j];
-				i++;
-			}
-		}
+
 	}
-	
-	Csommet* temp = (Csommet*)realloc(this->pGRATab, (size_t)sizeof(this->pGRATab) - (size_t)sizeof(Csommet));
+	this->stTailleTab--;
+	Csommet** temp = (Csommet**)realloc(this->pGRATab, (size_t)this->stTailleTab * (size_t)sizeof(Csommet));
 	if (temp != nullptr || this->stTailleTab == 1)
 	{
+		this->pGRATab = temp;
+	}
+	else {
+
 		CException EXCObj;
 		EXCObj.EXCset(reallocImpo);
 		throw(EXCObj);
 	}
-	else {
+}
+
+void Cgraphe::SuppSommetNum(unsigned int iArg)
+{
+	int iBoucle = 0;
+	int iIndice = -1;
+	for (int i = 0; i < this->stTailleTab; i++)
+	{
+		if (this->pGRATab[i]->AfficherNum() == iArg)
+		{
+			iIndice = i;
+		}
+	}
+	if (iIndice == -1) {
+		CException EXCObj;
+		EXCObj.EXCset(sommetNonPresent);
+		throw(EXCObj);
+	}
+	for (iBoucle = iIndice; iBoucle < this->stTailleTab; iBoucle++)
+	{
+		this->pGRATab[iBoucle] = this->pGRATab[iBoucle + 1];
+
+		
+	}
+	this->stTailleTab--;
+	Csommet** temp = (Csommet**)realloc(this->pGRATab, (size_t)this->stTailleTab * (size_t)sizeof(Csommet));
+	if (temp != nullptr || this->stTailleTab == 1)
+	{
 		this->pGRATab = temp;
 	}
-*/
+	else {
+		
+		CException EXCObj;
+		EXCObj.EXCset(reallocImpo);
+		throw(EXCObj);
+	}
+
 }
 
 void Cgraphe::createSommet(unsigned int uiArg)

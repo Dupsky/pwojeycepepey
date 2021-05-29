@@ -84,7 +84,11 @@ Csommet::Csommet(unsigned int uiArg)
 void Csommet::link(Csommet * sommet)
 {
 	//std::cout << "creation du lien du sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
-
+	if (this == nullptr) {
+		CException EXCObj;
+		EXCObj.EXCset(sommetNull);
+		throw(EXCObj);
+	}
 	Carc* arc1 = new Carc(sommet->AfficherNum());
 	Carc* arc2 = new Carc(this->AfficherNum());
 
@@ -396,8 +400,8 @@ void Csommet::suppArcPartant(Carc* ARCArg)
 			indice++;
 		}
 
-		tmp = (Carc**)realloc(this->SOMPartant, ((size_t)this->taillePartant() - 1) * (size_t)sizeof(ARCArg));
-		if (tmp != nullptr || this->iSOMArrivant == 1) {
+		tmp = (Carc**)realloc(this->SOMPartant, ((size_t)this->taillePartant()-1) * (size_t)sizeof(ARCArg));
+		if (tmp != nullptr || this->iSOMPartant == 1) {
 			this->SOMPartant = tmp;
 			this->iSOMPartant--;
 		}

@@ -1,5 +1,6 @@
 #pragma once
 #include "Carc.h"
+#include "Cexception.h"
 class Csommet
 {
 private:
@@ -38,4 +39,8 @@ public:
 	void AfficherTabs();
 	void SwitchLink(Csommet * sommet);
 };
+
+///////////erreurs///////////////
+
+#define sommetNull 10 
 

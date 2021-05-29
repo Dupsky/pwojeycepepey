@@ -27,3 +27,4 @@ public:
 #define reallocImpo 1
 #define sommetPresent 2
 #define sommetNonPresent 3
+#define argHorsLimite 4
