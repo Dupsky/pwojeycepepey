@@ -35,9 +35,7 @@ void Cgraphe::addSommet(Csommet * sommet)
 		this->pGRATab = temp;
 	}
 	
-	if (this->pGRATab != nullptr) {
-		this->pGRATab[this->stTailleTab] = sommet;
-	}
+	if (this->pGRATab != nullptr) this->pGRATab[this->tailleTab()] = sommet;
 	stTailleTab++;
 }
 

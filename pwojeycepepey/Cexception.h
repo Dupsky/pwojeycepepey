@@ -11,6 +11,7 @@ private:
 	unsigned int uiEXCValeur;
 
 public:
+	
 	void EXCset(unsigned int uiArg);
 	int EXCget();
 };
