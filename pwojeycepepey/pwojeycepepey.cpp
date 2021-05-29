@@ -17,8 +17,6 @@ int main()
 
 
 
-
-
     /*
     Csommet sommet1(1);
     Csommet sommet2(2);
