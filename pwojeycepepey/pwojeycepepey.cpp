@@ -22,10 +22,7 @@ int main(int argc, char* argv[])
     Cgraphe* graphe1 = new Cgraphe();
     try {
         Fichier.PARLireFichier(graphe1);
-    }
-    catch (CException EXCLevee) {
-        std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
-    }
+
     std::cout << "\ngraphique a partir du fichier :\n" << std::endl;
     graphe1->GRAAfficherGraph();
 
@@ -35,5 +32,10 @@ int main(int argc, char* argv[])
     graphe1->GRAAfficherGraph();
 
     return 1;
+    }
+    catch (CException EXCLevee) {
+        std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+    }
+
 }
 
