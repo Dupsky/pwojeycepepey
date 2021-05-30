@@ -5,7 +5,6 @@ Numero=1
 Numero=2 
 Numero=3
 Numero=4
-Numero=1
 ] 
 Arcs=[ 
 Debut=1, Fin=2 
