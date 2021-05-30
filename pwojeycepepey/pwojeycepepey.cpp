@@ -4,6 +4,7 @@
 #include "CSommet.h"
 #include "Cgraphe.h"
 #include "Cparser.h"
+#include "Cexception.h"
 
 int main(int argc, char* argv[])
 {
