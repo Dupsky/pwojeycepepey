@@ -26,6 +26,7 @@ Csommet::Csommet()
 ********************************************************************/
 Csommet::~Csommet()
 {
+
 	delete[] this->SOMPartant;
 	delete[] this->SOMArrivant;
 }
@@ -80,11 +81,11 @@ Csommet::Csommet(unsigned int uiArg)
 *Sortie :
 *Entraîne :
 ********************************************************************/
-void Csommet::link(Csommet &sommet)
+void Csommet::link(Csommet * sommet)
 {
 	//std::cout << "creation du lien du sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
 
-	Carc* arc1 = new Carc(sommet.AfficherNum());
+	Carc* arc1 = new Carc(sommet->AfficherNum());
 	Carc* arc2 = new Carc(this->AfficherNum());
 
 
@@ -94,7 +95,7 @@ void Csommet::link(Csommet &sommet)
 
 	//arc2.ARCModifDest(this->AfficherNum());
 
-	sommet.SOMArcArrivant(arc2);
+	sommet->SOMArcArrivant(arc2);
 
 	
 	
@@ -108,17 +109,17 @@ void Csommet::link(Csommet &sommet)
 *Entraîne :
 ********************************************************************/
 
-void Csommet::unlink(Csommet& sommet)
+void Csommet::unlink(Csommet* sommet)
 {
 	//std::cout << "suppression du lien du sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
 
 	if(this->islink(sommet)) { //il y a un lien de 1 vers 2
 
 		//suppression arc dans le sommet 1 (partant avec destination = 2)
-		this->suppArcPartant(this->TrouverArcPartant(sommet.AfficherNum()));
+		this->suppArcPartant(this->TrouverArcPartant(sommet->AfficherNum()));
 
 		//suppression arc dans le sommet 2 (arrivant avec destination = 1)
-		sommet.suppArcArrivant(sommet.TrouverArcArrivant(this->AfficherNum()));
+		sommet->suppArcArrivant(sommet->TrouverArcArrivant(this->AfficherNum()));
 	}
 
 
@@ -134,14 +135,13 @@ void Csommet::unlink(Csommet& sommet)
 *			(uniquement l'arc partant de l'objet pointé)
 ********************************************************************/
 
-void Csommet::SwitchLink(Csommet sommet)
+void Csommet::SwitchLink(Csommet * sommet)
 {
-	Carc  arc1 = Carc();
-	Carc arc2 = Carc();
 
-	if (!sommet.islink(*this) && this->islink(sommet)) {
+
+	if (!sommet->islink(this) && this->islink(sommet)) {
 		this->unlink(sommet);
-		sommet.link(*this);
+		sommet->link(this);
 	}
 }
 
@@ -219,9 +219,9 @@ Carc* Csommet::TrouverArcArrivant(unsigned int destination)
 *Entraîne :
 ********************************************************************/
 
-int Csommet::islink(Csommet sommet)
+int Csommet::islink(Csommet * sommet)
 {
-	if (this->TrouverArcPartant(sommet.AfficherNum()) != nullptr) {
+	if (this->TrouverArcPartant(sommet->AfficherNum()) != nullptr) {
 		return 1;
 	}
 	else
@@ -418,7 +418,7 @@ void Csommet::suppArcPartant(Carc* ARCArg)
 
 void Csommet::AfficherTabs() {
 	int i = 0;
-
+	
 	std::cout << "Sommet n = " << this->AfficherNum() << " :\n-> :" << std::endl;
 
 	while (i < this->iSOMPartant)

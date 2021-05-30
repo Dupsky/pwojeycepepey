@@ -133,7 +133,7 @@ void Cparser::LireFichier(Cgraphe* graphe)
 					Csommet* sommet2 = graphe->TrouverSommet(numsommet2);
 
 
-					sommet1->link(*sommet2);
+					sommet1->link(sommet2);
 
 					
 

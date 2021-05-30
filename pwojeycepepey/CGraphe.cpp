@@ -26,7 +26,7 @@ Cgraphe::Cgraphe()
 
 Cgraphe::~Cgraphe()
 {
-	delete[] this->pGRATab;
+	free(this->pGRATab);
 }
 
 /*******************************************************************
@@ -50,20 +50,21 @@ void Cgraphe::addSommet(Csommet * sommet)
 			throw(EXCObj);
 		}
 	}
-
-	Csommet** temp = (Csommet**)realloc(this->pGRATab, (size_t)sizeof(this->pGRATab) + (size_t)sizeof(sommet));
+	stTailleTab++;
+	Csommet** temp = (Csommet**)realloc(this->pGRATab, (size_t)this->stTailleTab * (size_t)sizeof(sommet));
 	if (temp == nullptr)
 	{
 		CException EXCObj;
 		EXCObj.EXCset(reallocImpo);
 		throw(EXCObj);
+		stTailleTab--;
 	}
 	else {
 		this->pGRATab = temp;
 	}
 	
-	if (this->pGRATab != nullptr) this->pGRATab[this->tailleTab()] = sommet;
-	stTailleTab++;
+	if (this->pGRATab != nullptr) this->pGRATab[this->stTailleTab-1] = sommet;
+	
 }
 
 /*******************************************************************
@@ -100,7 +101,7 @@ void Cgraphe::InverserGraph()
 		for (int j = 0; j < this->stTailleTab; j++)
 		{
 			if (j > i) {
-				this->pGRATab[i]->SwitchLink(*this->pGRATab[j]);
+				this->pGRATab[i]->SwitchLink(this->pGRATab[j]);
 			}
 		}
 	}
@@ -193,6 +194,7 @@ void Cgraphe::createSommet(unsigned int uiArg)
 	Csommet * sommet =new Csommet(uiArg);
 
 	this->addSommet(sommet);
+	//this->pGRATab[uiArg - 1];
 }
 
 /*******************************************************************

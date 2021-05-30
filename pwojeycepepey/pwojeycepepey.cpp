@@ -22,5 +22,15 @@ int main()
 
     graphe1.AfficherGraph();
 
+    graphe->TrouverSommet(1)->link(graphe->TrouverSommet(2));
+    graphe->TrouverSommet(2)->link(graphe->TrouverSommet(3));
+    graphe->TrouverSommet(3)->link(graphe->TrouverSommet(2));
+    graphe->TrouverSommet(1)->link(graphe->TrouverSommet(3));
+    graphe->AfficherGraph();
+
+    graphe->InverserGraph();
+
+    graphe->AfficherGraph();
+   */
 }
 
