@@ -14,44 +14,44 @@ Cparser::Cparser(const char* cNomfichier)
 	this->cNomfichier = cNomfichier;
 }
 
-void Cparser::LireFichier(Cgraphe* graphe)
+void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 {
 
 
 	std::ifstream MonFichier(this->cNomfichier);
 
-	int num_ligne = 0;
-	int NBSommets = 0;
-	int NBArcs = 0;
+	int iNumLigne = 0;
+	int iNBSommets = 0;
+	int iNBArcs = 0;
 
 
 	if (MonFichier) {
 		std::string ligne;
 		while (std::getline(MonFichier, ligne))
 		{
-			num_ligne++;
+			iNumLigne++;
 
 			size_t size = ligne.size() + 1;
 			char* buffer = new char[size];
 			strncpy_s(buffer, size, ligne.c_str(), size);
 
 			//on enleve de notre buffer la partie 'variable = '
-			if (num_ligne <= 3) {
+			if (iNumLigne <= 3) {
 				while (*buffer != '=') {
 					buffer++;
 				}
 				buffer++;
 			}
 			//on assigne la valeur
-			switch (num_ligne) {
+			switch (iNumLigne) {
 			case 1: //nombre de sommet
 
-				NBSommets = atoi(buffer);
+				iNBSommets = atoi(buffer);
 				
 				break;
 			case 2: //nombre d'arc
 
-				NBArcs = atoi(buffer);
+				iNBArcs = atoi(buffer);
 
 				break;
 			case 3: //création des sommets avec leur numero
@@ -63,14 +63,14 @@ void Cparser::LireFichier(Cgraphe* graphe)
 
 				strncpy_s(buffer, size, ligne.c_str(), size);
 
-				for (int i = 0; i < NBSommets; i++) {
+				for (int iBoucle = 0; iBoucle < iNBSommets; iBoucle++) {
 					//on enleve de notre buffer la partie 'variable = '
 					while (*buffer != '=') {
 						buffer++;
 					}
 					buffer++;
 
-					graphe->createSommet(atoi(buffer));
+					pGRAArg->GRACreerSommet(atoi(buffer));
 
 					//on va a la ligne suivante i+1 fois
 					std::getline(MonFichier, ligne);
@@ -95,7 +95,7 @@ void Cparser::LireFichier(Cgraphe* graphe)
 
 				strncpy_s(buffer, size, ligne.c_str(), size);
 
-				for (int j = 0; j < NBArcs; j++) {
+				for (int iBoucle2 = 0; iBoucle2 < iNBArcs; iBoucle2++) {
 
 
 					//on enleve de notre buffer la partie 'variable = '
@@ -116,7 +116,7 @@ void Cparser::LireFichier(Cgraphe* graphe)
 						indiceNumero++;
 						buffer++;
 					}
-					int numsommet1 = atoi(buffer2);
+					int iNumSommet1 = atoi(buffer2);
 		
 
 					//on enleve de notre buffer la partie ', variable = '
@@ -125,15 +125,15 @@ void Cparser::LireFichier(Cgraphe* graphe)
 					}
 					buffer++;
 
-					int numsommet2 = atoi(buffer);
+					int iNumSommet2 = atoi(buffer);
 
 					//on link les 2 sommets
 
-					Csommet* sommet1 = graphe->TrouverSommet(numsommet1);
-					Csommet* sommet2 = graphe->TrouverSommet(numsommet2);
+					Csommet* pSOMsommet1 = pGRAArg->GRATrouverSommet(iNumSommet1);
+					Csommet* pSOMsommet2 = pGRAArg->GRATrouverSommet(iNumSommet2);
 
 
-					sommet1->link(sommet2);
+					pSOMsommet1->SOMLink(pSOMsommet2);
 
 					
 

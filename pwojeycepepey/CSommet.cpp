@@ -17,10 +17,10 @@ using std::size;
 Csommet::Csommet()
 {
 	this->uiSOMNumSom=0;
-	this->SOMPartant=nullptr;
-	this->SOMArrivant=nullptr;
-	this->iSOMArrivant = 0;
-	this->iSOMPartant = 0;
+	this->paSOMPartant=nullptr;
+	this->paSOMArrivant=nullptr;
+	this->iSOMNbArrivant = 0;
+	this->iSOMNbPartant = 0;
 }
 
 /*******************************************************************
@@ -33,8 +33,8 @@ Csommet::Csommet()
 Csommet::~Csommet()
 {
 
-	delete[] this->SOMPartant;
-	delete[] this->SOMArrivant;
+	delete[] this->paSOMPartant;
+	delete[] this->paSOMArrivant;
 }
 /*******************************************************************
 * Récupérer le numéro du sommet
@@ -43,7 +43,7 @@ Csommet::~Csommet()
 *Sortie :unsigned int le numéro du sommet
 *Entraîne : Return le numéro du sommet pointé
 ********************************************************************/
-unsigned int Csommet::AfficherNum()
+unsigned int Csommet::SOMNumSommet()
 {
 	return this->uiSOMNumSom;
 }
@@ -57,14 +57,14 @@ unsigned int Csommet::AfficherNum()
 *Entraîne : Affichages des arcs partant du sommet
 ********************************************************************/
 
-void Csommet::AfficherArcsPartant()
+void Csommet::SOMAfficherArcsPartant()
 {
-	int i = 0;
+	int iBoucle = 0;
 
-	while (i < this->iSOMPartant)
+	while (iBoucle < this->iSOMNbPartant)
 	{
-		std::cout << this->uiSOMNumSom << "->" << this->SOMPartant[i]->getDest() << " ; ";
-		i++;
+		std::cout << this->uiSOMNumSom << "->" << this->paSOMPartant[iBoucle]->ARCDest() << " ; ";
+		iBoucle++;
 	}
 
 }
@@ -81,10 +81,10 @@ void Csommet::AfficherArcsPartant()
 Csommet::Csommet(unsigned int uiArg)
 {
 	this->uiSOMNumSom = uiArg;
-	this->SOMPartant = nullptr;
-	this->SOMArrivant = nullptr;
-	this->iSOMArrivant = 0;
-	this->iSOMPartant = 0;
+	this->paSOMPartant = nullptr;
+	this->paSOMArrivant = nullptr;
+	this->iSOMNbArrivant = 0;
+	this->iSOMNbPartant = 0;
 }
 
 /*******************************************************************
@@ -95,19 +95,19 @@ Csommet::Csommet(unsigned int uiArg)
 *Entraîne : Lie deux sommet avec des arcs, l'objet pointé sera le départ
 *			et l'objet en argument sera l'arrivée
 ********************************************************************/
-void Csommet::link(Csommet * sommet)
+void Csommet::SOMLink(Csommet * pSOMArg)
 {
 	if (this == nullptr) {
 		CException EXCObj;
 		EXCObj.EXCset(sommetNull);
 		throw(EXCObj);
 	}
-	Carc* arc1 = new Carc(sommet->AfficherNum());
-	Carc* arc2 = new Carc(this->AfficherNum());
+	Carc* arc1 = new Carc(pSOMArg->SOMNumSommet());
+	Carc* arc2 = new Carc(this->SOMNumSommet());
 
 	this->SOMArcPartant(arc1);
 
-	sommet->SOMArcArrivant(arc2);
+	pSOMArg->SOMArcArrivant(arc2);
 
 }
 
@@ -119,16 +119,19 @@ void Csommet::link(Csommet * sommet)
 *Entraîne : délie deux sommets 
 ********************************************************************/
 
-void Csommet::unlink(Csommet* sommet)
+void Csommet::SOMUnlink(Csommet* pSOMArg)
 {
 
-	if(this->islink(sommet)) { //il y a un lien de 1 vers 2
+	if(this->SOMIsLink(pSOMArg)) { //il y a un lien de 1 vers 2
 
 		//suppression arc dans le sommet 1 (partant avec destination = 2)
-		this->suppArcPartant(this->TrouverArcPartant(sommet->AfficherNum()));
+		this->SOMSuppArcPartant(this->SOMTrouverArcPartant(pSOMArg->SOMNumSommet()));
 
 		//suppression arc dans le sommet 2 (arrivant avec destination = 1)
-		sommet->suppArcArrivant(sommet->TrouverArcArrivant(this->AfficherNum()));
+		pSOMArg->SOMSuppArcArrivant(pSOMArg->SOMTrouverArcArrivant(this->SOMNumSommet()));
+	}
+	else {
+		std::cout << "Aucun lien entre le sommet " << this->uiSOMNumSom << " et le sommet" << pSOMArg->SOMNumSommet();
 	}
 
 
@@ -144,13 +147,13 @@ void Csommet::unlink(Csommet* sommet)
 *			(uniquement l'arc partant de l'objet pointé)
 ********************************************************************/
 
-void Csommet::SwitchLink(Csommet * sommet)
+void Csommet::SOMSwitchLink(Csommet * pSOMArg)
 {
 
 
-	if (!sommet->islink(this) && this->islink(sommet)) {
-		this->unlink(sommet);
-		sommet->link(this);
+	if (!pSOMArg->SOMIsLink(this) && this->SOMIsLink(pSOMArg)) {
+		this->SOMUnlink(pSOMArg);
+		pSOMArg->SOMLink(this);
 	}
 }
 
@@ -165,27 +168,29 @@ void Csommet::SwitchLink(Csommet * sommet)
 *			des arcs partant
 ********************************************************************/
 
-Carc* Csommet::TrouverArcPartant(unsigned int uiDest)
+Carc* Csommet::SOMTrouverArcPartant(unsigned int uiDest)
 {
-	int i = 0;
-	int indice = -1;
+	int iBoucle = 0;
+	int iIndice = -1;
 	//cherche dans le tableau arc partant l'arc avec la bonne destination
 
-	while (i < this->iSOMPartant)
+	while (iBoucle < this->iSOMNbPartant)
 	{
-		if (this->SOMPartant[i]->getDest() == uiDest) {
-			indice = i;
+		if (this->paSOMPartant[iBoucle]->ARCDest() == uiDest) {
+			iIndice = iBoucle;
 		}
-		i++;
+		iBoucle++;
 	}
 
-	if (indice != -1 && this->SOMPartant[indice]->getDest() == uiDest)
+	if (iIndice != -1 && this->paSOMPartant[iIndice]->ARCDest() == uiDest)
 	{
-		return this->SOMPartant[indice];
+		return this->paSOMPartant[iIndice];
 	}
 	else
 	{
-		return nullptr;
+		CException EXCObj;
+		EXCObj.EXCset(arcNonPresent);
+		throw(EXCObj);
 	}
 }
 
@@ -198,27 +203,29 @@ Carc* Csommet::TrouverArcPartant(unsigned int uiDest)
 *			des arcs arrivants
 ********************************************************************/
 
-Carc* Csommet::TrouverArcArrivant(unsigned int uiDest)
+Carc* Csommet::SOMTrouverArcArrivant(unsigned int uiDest)
 {
-	int i = 0;
-	int indice = -1;
+	int iBoucle = 0;
+	int iIndice = -1;
 	//cherche dans le tableau arc partant l'arc avec la bonne destination
 
-	while (i < this->iSOMArrivant)
+	while (iBoucle < this->iSOMNbArrivant)
 	{
-		if (this->SOMArrivant[i]->getDest() == uiDest) {
-			indice = i;
+		if (this->paSOMArrivant[iBoucle]->ARCDest() == uiDest) {
+			iIndice = iBoucle;
 		}
-		i++;
+		iBoucle++;
 	}
 
-	if (indice != -1 && this->SOMArrivant[indice]->getDest() == uiDest)
+	if (iIndice != -1 && this->paSOMArrivant[iIndice]->ARCDest() == uiDest)
 	{
-		return this->SOMArrivant[indice];
+		return this->paSOMArrivant[iIndice];
 	}
 	else
 	{
-		return nullptr;
+		CException EXCObj;
+		EXCObj.EXCset(arcNonPresent);
+		throw(EXCObj);
 	}
 }
 
@@ -230,15 +237,21 @@ Carc* Csommet::TrouverArcArrivant(unsigned int uiDest)
 *Entraîne : la recherche d'un lien entre 2 sommets
 ********************************************************************/
 
-int Csommet::islink(Csommet * sommet)
+int Csommet::SOMIsLink(Csommet * pSOMArg)
 {
-	if (this->TrouverArcPartant(sommet->AfficherNum()) != nullptr) {
-		return 1;
+	try {
+		if (this->SOMTrouverArcPartant(pSOMArg->SOMNumSommet()) != nullptr) {
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
-	else
-	{
-		return 0;
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << std::endl;
 	}
+
 }
 
 /*******************************************************************
@@ -253,11 +266,11 @@ int Csommet::islink(Csommet * sommet)
 void Csommet::SOMModifierNum(unsigned int uiArg)
 {
 	this->uiSOMNumSom = uiArg;
-	int i = 0;
-	while(i < this->iSOMArrivant)
+	int iBoucle = 0;
+	while(iBoucle < this->iSOMNbArrivant)
 	{
-		this->SOMArrivant[i]->ARCModifDest(uiArg);
-		i++;
+		this->paSOMArrivant[iBoucle]->ARCModifDest(uiArg);
+		iBoucle++;
 	}
 }
 
@@ -270,16 +283,16 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 *Entraîne : L'ajout de l'arc en argument dans la liste de arrivant de
 *			l'objet pointé
 ********************************************************************/
-void Csommet::SOMArcArrivant(Carc *ARCArg)
+void Csommet::SOMArcArrivant(Carc *pARCArg)
 {
 
-	Carc** tmp = (Carc**) realloc (this->SOMArrivant, ((size_t)this->taillePartant() + 1) * (size_t)sizeof(ARCArg));
-	if (tmp != nullptr) {
-		this->SOMArrivant = tmp;
+	Carc** pARCtmp = (Carc**) realloc (this->paSOMArrivant, ((size_t)this->SOMTailleArrivant() + 1) * (size_t)sizeof(pARCArg));
+	if (pARCtmp != nullptr) {
+		this->paSOMArrivant = pARCtmp;
 	}
 	
-	this->SOMArrivant[this->tailleArrivant()] = ARCArg;
-	this->iSOMArrivant++;
+	this->paSOMArrivant[this->SOMTailleArrivant()] = pARCArg;
+	this->iSOMNbArrivant++;
 }
 
 /*******************************************************************
@@ -291,18 +304,18 @@ void Csommet::SOMArcArrivant(Carc *ARCArg)
 *Entraîne : L'ajout de l'arc en argument dans la liste de partant de 
 *			l'objet pointé
 ********************************************************************/
-void Csommet::SOMArcPartant(Carc *ARCArg)
+void Csommet::SOMArcPartant(Carc *pARCArg)
 {
 
 	
-		Carc** tmp = (Carc**)realloc(this->SOMPartant, ((size_t)this->taillePartant() + 1) * (size_t)sizeof(ARCArg));
-		if (tmp != nullptr)
+		Carc** pARCtmp = (Carc**)realloc(this->paSOMPartant, ((size_t)this->SOMTaillePartant() + 1) * (size_t)sizeof(pARCArg));
+		if (pARCtmp != nullptr)
 		{
-			this->SOMPartant = tmp;
+			this->paSOMPartant = pARCtmp;
 		}
 	
-	this->SOMPartant[this->taillePartant()] = ARCArg;
-	this->iSOMPartant++;
+	this->paSOMPartant[this->SOMTaillePartant()] = pARCArg;
+	this->iSOMNbPartant++;
 }
 
 /*******************************************************************
@@ -313,9 +326,9 @@ void Csommet::SOMArcPartant(Carc *ARCArg)
 *Entraîne : La récuperation de la taille du tableau de arrivant de
 *			l'objet pointé
 ********************************************************************/
-int Csommet::tailleArrivant()
+int Csommet::SOMTailleArrivant()
 {
-	return this->iSOMArrivant;
+	return this->iSOMNbArrivant;
 }
 
 /*******************************************************************
@@ -326,9 +339,9 @@ int Csommet::tailleArrivant()
 *Entraîne : La récuperation de las taille du tableau de partant de
 *			l'objet pointé
 ********************************************************************/
-int Csommet::taillePartant()
+int Csommet::SOMTaillePartant()
 {
-	return this->iSOMPartant;
+	return this->iSOMNbPartant;
 }
 
 /*******************************************************************
@@ -340,33 +353,33 @@ int Csommet::taillePartant()
 *Entraîne : La suppression de l'arc contenu dans la liste des
 *			arc arrivant de l'objet pointé
 ********************************************************************/
-void Csommet::suppArcArrivant(Carc * ARCArg)
+void Csommet::SOMSuppArcArrivant(Carc * pARCArg)
 {
-	Carc** tmp = this->SOMArrivant;
-	int i = 0;
-	int indice = -1;
-	int temp_taille = this->iSOMArrivant;
+	Carc** pARCtmp = this->paSOMArrivant;
+	int iBoucle = 0;
+	int iIndice = -1;
+	int temp_taille = this->iSOMNbArrivant;
 
-	while (i < temp_taille) {
-		if (this->SOMArrivant[i] == ARCArg) {
-			indice = i;
+	while (iBoucle < temp_taille) {
+		if (this->paSOMArrivant[iBoucle] == pARCArg) {
+			iIndice = iBoucle;
 		}
-		i++;
+		iBoucle++;
 	}
 
-	if (indice != -1) { //element bien présent 
+	if (iIndice != -1) { //element bien présent 
 
-		while (indice < temp_taille) {
-			tmp[indice] = tmp[indice + 1];
-			indice++;
+		while (iIndice < temp_taille) {
+			pARCtmp[iIndice] = pARCtmp[iIndice + 1];
+			iIndice++;
 		}
 
-		tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->tailleArrivant() - 1) * (size_t)sizeof(ARCArg));
+		pARCtmp = (Carc**)realloc(this->paSOMArrivant, ((size_t)this->SOMTailleArrivant() - 1) * (size_t)sizeof(pARCArg));
 
 
-		if (tmp != nullptr || this->iSOMArrivant == 1) {
-			this->SOMArrivant = tmp;
-			this->iSOMArrivant--;
+		if (pARCtmp != nullptr || this->iSOMNbArrivant == 1) {
+			this->paSOMArrivant = pARCtmp;
+			this->iSOMNbArrivant--;
 		}
 		else {
 			std::cout << "realloc non réussi" << std::endl;
@@ -384,31 +397,31 @@ void Csommet::suppArcArrivant(Carc * ARCArg)
 *Entraîne : La suppression de l'arc contenu dans la liste des
 *			arc partant de l'objet pointé
 ********************************************************************/
-void Csommet::suppArcPartant(Carc* ARCArg)
+void Csommet::SOMSuppArcPartant(Carc* pARCArg)
 {
-	Carc** tmp = this->SOMPartant;
-	int i = 0;
-	int indice = -1;
-	int temp_taille = this->iSOMPartant;
+	Carc** pARCtmp = this->paSOMPartant;
+	int iBoucle = 0;
+	int iIndice = -1;
+	int temp_taille = this->iSOMNbPartant;
 
-	while (i < temp_taille) {
-		if (this->SOMPartant[i] == ARCArg) {
-			indice = i;
+	while (iBoucle < temp_taille) {
+		if (this->paSOMPartant[iBoucle] == pARCArg) {
+			iIndice = iBoucle;
 		}
-		i++;
+		iBoucle++;
 	}
 
-	if (indice != -1) { //element bien présent 
+	if (iIndice != -1) { //element bien présent 
 
-		while (indice < temp_taille) {
-			tmp[indice] = tmp[indice + 1];
-			indice++;
+		while (iIndice < temp_taille) {
+			pARCtmp[iIndice] = pARCtmp[iIndice + 1];
+			iIndice++;
 		}
 
-		tmp = (Carc**)realloc(this->SOMPartant, ((size_t)this->taillePartant()-1) * (size_t)sizeof(ARCArg));
-		if (tmp != nullptr || this->iSOMPartant == 1) {
-			this->SOMPartant = tmp;
-			this->iSOMPartant--;
+		pARCtmp = (Carc**)realloc(this->paSOMPartant, ((size_t)this->SOMTaillePartant()-1) * (size_t)sizeof(pARCArg));
+		if (pARCtmp != nullptr || this->iSOMNbPartant == 1) {
+			this->paSOMPartant = pARCtmp;
+			this->iSOMNbPartant--;
 		}
 		else {
 			std::cout << "realloc non réussi" << std::endl;
@@ -425,25 +438,25 @@ void Csommet::suppArcPartant(Carc* ARCArg)
 *Entraîne : Affichages des valeurs des 2 tableaux du Csommet
 ********************************************************************/
 
-void Csommet::AfficherTabs() {
-	int i = 0;
+void Csommet::SOMAfficherTabs() {
+	int iBoucle = 0;
 	
-	std::cout << "Sommet n = " << this->AfficherNum() << " :\n-> :" << std::endl;
+	std::cout << "Sommet n = " << this->SOMNumSommet() << " :\n-> :" << std::endl;
 
-	while (i < this->iSOMPartant)
+	while (iBoucle < this->iSOMNbPartant)
 	{
-		std::cout << "T[" << i << "] = " << this->SOMPartant[i]->getDest() << std::endl;
-		i++;
+		std::cout << "T[" << iBoucle << "] = " << this->paSOMPartant[iBoucle]->ARCDest() << std::endl;
+		iBoucle++;
 	}
 
-	i = 0;
+	iBoucle = 0;
 
 	std::cout << "\n<- :" << std::endl;
 
-	while (i < this->iSOMArrivant)
+	while (iBoucle < this->iSOMNbArrivant)
 	{
-		std::cout << "T[" << i << "] = " << this->SOMArrivant[i]->getDest() << std::endl;
-		i++;
+		std::cout << "T[" << iBoucle << "] = " << this->paSOMArrivant[iBoucle]->ARCDest() << std::endl;
+		iBoucle++;
 	}
 	std::cout << std::endl;
 }

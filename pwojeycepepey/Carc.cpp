@@ -8,7 +8,7 @@
 *Entraîne : Crée un objet de la classe Carc
 ********************************************************************/
 Carc::Carc() {
-	this->destination = 0;
+	this->uiDest = 0;
 }
 /*******************************************************************
 * Constructeur de la classe Carc
@@ -18,7 +18,7 @@ Carc::Carc() {
 *Entraîne : Crée un objet de la classe Carc avec comme destination uiDest
 ********************************************************************/
 Carc::Carc(unsigned int uiDest) {
-	this->destination = uiDest;
+	this->uiDest = uiDest;
 }
 /*******************************************************************
 * Destructeur par défaut
@@ -30,23 +30,23 @@ Carc::Carc(unsigned int uiDest) {
 Carc::~Carc() {
 }
 /*******************************************************************
-* Modifier la destination d'un arc
+* Modifier la uiDest d'un arc
 ********************************************************************
-*Entrée : uiArg la destination à prendre
+*Entrée : uiArg la uiDest à prendre
 *Sortie :void
-*Entraîne : Modifie la destination d'un arc
+*Entraîne : Modifie la uiDest d'un arc
 ********************************************************************/
 void Carc::ARCModifDest(unsigned int uiArg) {
-	this->destination = uiArg;
+	this->uiDest = uiArg;
 }
 /*******************************************************************
-* Récuperer la destination d'un arc
+* Récuperer la uiDest d'un arc
 ********************************************************************
 *Entrée :
 *Sortie : unsigned int 
 *Entraîne : Return la destination d'un arc
 ********************************************************************/
-unsigned int Carc::getDest()
+unsigned int Carc::ARCDest()
 {
-	return this->destination;
+	return this->uiDest;
 }

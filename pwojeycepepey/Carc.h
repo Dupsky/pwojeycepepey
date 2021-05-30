@@ -2,12 +2,12 @@
 class Carc
 {
 private:
-	unsigned int destination;
+	unsigned int uiDest;
 public:
 	Carc();
-	Carc(unsigned int destination);
+	Carc(unsigned int uiDest);
 	~Carc();
 	void ARCModifDest(unsigned int uiArg);
-	unsigned int getDest();
+	unsigned int ARCDest();
 };
 

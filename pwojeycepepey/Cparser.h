@@ -8,7 +8,7 @@ private:
 
 public:
 	Cparser(const char* cNomfichier);
-	void LireFichier(Cgraphe* graphe);
+	void PARLireFichier(Cgraphe* pGRAArg);
 
 };
 

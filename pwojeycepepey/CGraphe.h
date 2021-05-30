@@ -5,19 +5,19 @@
 class Cgraphe
 {
 private:
-	Csommet** pGRATab;
+	Csommet** psGRATab;
 	size_t stTailleTab;
 public:
 	Cgraphe();
 	~Cgraphe();
-	void addSommet(Csommet * sommet);
-	void createSommet(unsigned int uiArg);
-	size_t tailleTab();
-	void AfficherGraph();
-	void InverserGraph();
-	void SuppSommetIndex(unsigned int iArg);
-	void SuppSommetNum(unsigned int iArg);
-	Csommet* TrouverSommet(unsigned int iArg);
+	void GRAAjouterSommet(Csommet * pSOMArg);
+	void GRACreerSommet(unsigned int uiArg);
+	size_t GRATailleTab();
+	void GRAAfficherGraph();
+	void GRAInverserGraph();
+	void GRASuppSommetIndex(unsigned int iArg);
+	void GRASuppSommetNum(unsigned int iArg);
+	Csommet* GRATrouverSommet(unsigned int iArg);
 };
 
 ///////////erreurs///////////////

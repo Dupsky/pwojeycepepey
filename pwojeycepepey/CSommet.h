@@ -5,42 +5,43 @@ class Csommet
 {
 private:
 	unsigned int uiSOMNumSom;
-	Carc ** SOMArrivant;
-	Carc ** SOMPartant;
-	int iSOMArrivant;
-	int iSOMPartant;
+	Carc ** paSOMArrivant;
+	Carc ** paSOMPartant;
+	int iSOMNbArrivant;
+	int iSOMNbPartant;
 public:
 	Csommet();
 	Csommet(unsigned int uiArg);
 	~Csommet();
-	unsigned int AfficherNum();
+	unsigned int SOMNumSommet();
 
-	void AfficherArcsPartant();
+	void SOMAfficherArcsPartant();
 
-	void link(Csommet * sommet);
-	void unlink(Csommet * sommet);
+	void SOMLink(Csommet * pSOMArg);
+	void SOMUnlink(Csommet * pSOMArg);
 
-	Carc* TrouverArcPartant(unsigned int destination);
-	Carc* TrouverArcArrivant(unsigned int destination);
+	Carc* SOMTrouverArcPartant(unsigned int uiDest);
+	Carc* SOMTrouverArcArrivant(unsigned int uiDest);
 
-	int islink(Csommet * sommet);
+	int SOMIsLink(Csommet * pSOMArg);
 
 	void SOMModifierNum(unsigned int uiArg);
 
-	void SOMArcArrivant(Carc * ARCArg);
-	void SOMArcPartant(Carc * ARCArg);
+	void SOMArcArrivant(Carc * pARCArg);
+	void SOMArcPartant(Carc * pARCArg);
 
-	void suppArcPartant(Carc* ARCArg);
-	void suppArcArrivant(Carc* ARCArg);
+	void SOMSuppArcPartant(Carc* pARCArg);
+	void SOMSuppArcArrivant(Carc* pARCArg);
 
-	int tailleArrivant();
-	int taillePartant();
+	int SOMTailleArrivant();
+	int SOMTaillePartant();
 
-	void AfficherTabs();
-	void SwitchLink(Csommet * sommet);
+	void SOMAfficherTabs();
+	void SOMSwitchLink(Csommet * pSOMArg);
 };
 
 ///////////erreurs///////////////
 
 #define sommetNull 10 
+#define arcNonPresent 11
 

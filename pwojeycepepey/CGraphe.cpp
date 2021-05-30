@@ -12,7 +12,7 @@
 ********************************************************************/
 Cgraphe::Cgraphe()
 {
-	this->pGRATab = nullptr;
+	this->psGRATab = nullptr;
 	this->stTailleTab = 0;
 }
 /*******************************************************************
@@ -24,7 +24,7 @@ Cgraphe::Cgraphe()
 ********************************************************************/
 Cgraphe::~Cgraphe()
 {
-	free(this->pGRATab);
+	free(this->psGRATab);
 }
 
 /*******************************************************************
@@ -35,13 +35,13 @@ Cgraphe::~Cgraphe()
 *Sortie : void
 *Entraîne : Ajoute un sommet au graphe
 ********************************************************************/
-void Cgraphe::addSommet(Csommet * sommet)
+void Cgraphe::GRAAjouterSommet(Csommet * pSOMArg)
 {
-	//this->AfficherGraph();
+	//this->GRAAfficherGraph();
 
-	for (int i = 0; i < this->stTailleTab; i++)
+	for (int iBoucle = 0; iBoucle < this->stTailleTab; iBoucle++)
 	{
-		if (this->pGRATab[i]->AfficherNum()==sommet->AfficherNum())
+		if (this->psGRATab[iBoucle]->SOMNumSommet()== pSOMArg->SOMNumSommet())
 		{
 			CException EXCObj;
 			EXCObj.EXCset(sommetPresent);
@@ -49,8 +49,8 @@ void Cgraphe::addSommet(Csommet * sommet)
 		}
 	}
 	stTailleTab++;
-	Csommet** temp = (Csommet**)realloc(this->pGRATab, (size_t)this->stTailleTab * (size_t)sizeof(sommet));
-	if (temp == nullptr)
+	Csommet** pSOMtemp = (Csommet**)realloc(this->psGRATab, (size_t)this->stTailleTab * (size_t)sizeof(pSOMArg));
+	if (pSOMtemp == nullptr)
 	{
 		CException EXCObj;
 		EXCObj.EXCset(reallocImpo);
@@ -58,10 +58,10 @@ void Cgraphe::addSommet(Csommet * sommet)
 		stTailleTab--;
 	}
 	else {
-		this->pGRATab = temp;
+		this->psGRATab = pSOMtemp;
 	}
 	
-	if (this->pGRATab != nullptr) this->pGRATab[this->stTailleTab-1] = sommet;
+	if (this->psGRATab != nullptr) this->psGRATab[this->stTailleTab-1] = pSOMArg;
 	
 }
 
@@ -72,13 +72,13 @@ void Cgraphe::addSommet(Csommet * sommet)
 *Sortie : void
 *Entraîne : Affiche le graphe 
 ********************************************************************/
-void Cgraphe::AfficherGraph()
+void Cgraphe::GRAAfficherGraph()
 {
-	int pos=0;
+	int iPos=0;
 	std::cout << "Liste des sommets du graphique et leurs arcs partant" << std::endl;
-	for (pos; pos < this->stTailleTab; pos++) {
-		std::cout << "Sommet " << this->pGRATab[pos]->AfficherNum() << ": ";
-		this->pGRATab[pos]->AfficherArcsPartant();
+	for (iPos; iPos < this->stTailleTab; iPos++) {
+		std::cout << "Sommet " << this->psGRATab[iPos]->SOMNumSommet() << ": ";
+		this->psGRATab[iPos]->SOMAfficherArcsPartant();
 		std::cout << std::endl;
 	}
 }
@@ -89,14 +89,14 @@ void Cgraphe::AfficherGraph()
 *Sortie : void
 *Entraîne : inverse les arcs entre chaque sommet du graphe
 ********************************************************************/
-void Cgraphe::InverserGraph()
+void Cgraphe::GRAInverserGraph()
 {
-	for (int i = 0; i < this->stTailleTab; i++)
+	for (int iBoucle = 0; iBoucle < this->stTailleTab; iBoucle++)
 	{
-		for (int j = 0; j < this->stTailleTab; j++)
+		for (int iBoucle2 = 0; iBoucle2 < this->stTailleTab; iBoucle2++)
 		{
-			if (j > i) {
-				this->pGRATab[i]->SwitchLink(this->pGRATab[j]);
+			if (iBoucle2 > iBoucle) {
+				this->psGRATab[iBoucle]->SOMSwitchLink(this->psGRATab[iBoucle2]);
 			}
 		}
 	}
@@ -109,7 +109,7 @@ void Cgraphe::InverserGraph()
 *Sortie : void
 *Entraîne : Return la taille du tableau de Csommet du graphe
 ********************************************************************/
-size_t Cgraphe::tailleTab()
+size_t Cgraphe::GRATailleTab()
 {
 	return this->stTailleTab;
 }
@@ -118,9 +118,9 @@ size_t Cgraphe::tailleTab()
 ********************************************************************
 *Entrée : Le numéro du sommet
 *Sortie : void
-*Entraîne : La suppression du sommet this->pGRATab[iArg]
+*Entraîne : La suppression du sommet this->psGRATab[iArg]
 ********************************************************************/
-void Cgraphe::SuppSommetIndex(unsigned int iArg)
+void Cgraphe::GRASuppSommetIndex(unsigned int iArg)
 {
 	int iBoucle = 0;
 	
@@ -131,15 +131,15 @@ void Cgraphe::SuppSommetIndex(unsigned int iArg)
 	}
 	for (iBoucle = iArg; iBoucle < this->stTailleTab; iBoucle++)
 	{
-		this->pGRATab[iBoucle] = this->pGRATab[iBoucle + 1];
+		this->psGRATab[iBoucle] = this->psGRATab[iBoucle + 1];
 
 
 	}
 	this->stTailleTab--;
-	Csommet** temp = (Csommet**)realloc(this->pGRATab, (size_t)this->stTailleTab * (size_t)sizeof(Csommet));
-	if (temp != nullptr || this->stTailleTab == 1)
+	Csommet** pSOMtemp = (Csommet**)realloc(this->psGRATab, (size_t)this->stTailleTab * (size_t)sizeof(Csommet));
+	if (pSOMtemp != nullptr || this->stTailleTab == 1)
 	{
-		this->pGRATab = temp;
+		this->psGRATab = pSOMtemp;
 	}
 	else {
 
@@ -155,15 +155,15 @@ void Cgraphe::SuppSommetIndex(unsigned int iArg)
 *Sortie :void
 *Entraîne : Supprime le sommet numéro iArg
 ********************************************************************/
-void Cgraphe::SuppSommetNum(unsigned int iArg)
+void Cgraphe::GRASuppSommetNum(unsigned int iArg)
 {
 	int iBoucle = 0;
 	int iIndice = -1;
-	for (int i = 0; i < this->stTailleTab; i++)
+	for (int iBoucle = 0; iBoucle < this->stTailleTab; iBoucle++)
 	{
-		if (this->pGRATab[i]->AfficherNum() == iArg)
+		if (this->psGRATab[iBoucle]->SOMNumSommet() == iArg)
 		{
-			iIndice = i;
+			iIndice = iBoucle;
 		}
 	}
 	if (iIndice == -1) {
@@ -171,17 +171,17 @@ void Cgraphe::SuppSommetNum(unsigned int iArg)
 		EXCObj.EXCset(sommetNonPresent);
 		throw(EXCObj);
 	}
-	for (iBoucle = iIndice; iBoucle < this->stTailleTab; iBoucle++)
+	for (int iBoucle2 = iIndice; iBoucle2 < this->stTailleTab; iBoucle2++)
 	{
-		this->pGRATab[iBoucle] = this->pGRATab[iBoucle + 1];
+		this->psGRATab[iBoucle2] = this->psGRATab[iBoucle2 + 1];
 
 		
 	}
 	this->stTailleTab--;
-	Csommet** temp = (Csommet**)realloc(this->pGRATab, (size_t)this->stTailleTab * (size_t)sizeof(Csommet));
-	if (temp != nullptr || this->stTailleTab == 1)
+	Csommet** pSOMtemp = (Csommet**)realloc(this->psGRATab, (size_t)this->stTailleTab * (size_t)sizeof(Csommet));
+	if (pSOMtemp != nullptr || this->stTailleTab == 1)
 	{
-		this->pGRATab = temp;
+		this->psGRATab = pSOMtemp;
 	}
 	else {
 		
@@ -198,12 +198,12 @@ void Cgraphe::SuppSommetNum(unsigned int iArg)
 *Sortie :void
 *Entraîne : Ajoute le nouveau sommet numéro iArg au graphe
 ********************************************************************/
-void Cgraphe::createSommet(unsigned int uiArg)
+void Cgraphe::GRACreerSommet(unsigned int uiArg)
 {
-	Csommet * sommet =new Csommet(uiArg);
+	Csommet * pSOMArg =new Csommet(uiArg);
 
-	this->addSommet(sommet);
-	//this->pGRATab[uiArg - 1];
+	this->GRAAjouterSommet(pSOMArg);
+	//this->psGRATab[uiArg - 1];
 }
 /*******************************************************************
 * Trouver un sommet dans le graphe
@@ -212,40 +212,26 @@ void Cgraphe::createSommet(unsigned int uiArg)
 *Sortie : Csommet * 
 *Entraîne : Return le sommet à trouver dans le graphe
 ********************************************************************/
-Csommet* Cgraphe::TrouverSommet(unsigned int uiArg)
+Csommet* Cgraphe::GRATrouverSommet(unsigned int uiArg)
 {
-	int i = 0;
+	int iBoucle = 0;
 	int indice = -1;
 	//cherche dans le tableau le sommet avec le bon numero
 
-	while (i < this->stTailleTab)
+	while (iBoucle < this->stTailleTab)
 	{
-		if (this->pGRATab[i]->AfficherNum() == uiArg) {
-			indice = i;
+		if (this->psGRATab[iBoucle]->SOMNumSommet() == uiArg) {
+			indice = iBoucle;
 		}
-		i++;
+		iBoucle++;
 	}
 
-	if (indice != -1 && this->pGRATab[indice]->AfficherNum() == uiArg)
+	if (indice != -1 && this->psGRATab[indice]->SOMNumSommet() == uiArg)
 	{
-		return this->pGRATab[indice];
+		return this->psGRATab[indice];
 	}
 	else
 	{
 		return nullptr;
 	}
-}
-
-
-
-/*******************************************************************
-* Récuperer la taille du graphique
-********************************************************************
-*Entrée : 
-*Sortie : size_t la taille du graphe
-*Entraîne : Return la taille du Graphe (nombre de sommets)
-********************************************************************/
-size_t Cgraphe::sizeofgraph()
-{
-	return sizeof(this->pGRATab);
 }
