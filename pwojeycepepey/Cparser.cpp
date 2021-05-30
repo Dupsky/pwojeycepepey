@@ -24,7 +24,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 	int iNBSommets = 0;
 	int iNBArcs = 0;
 
-	
+
 	if (MonFichier) {
 		std::string ligne;
 		while (std::getline(MonFichier, ligne))
@@ -47,7 +47,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 			case 1: //nombre de sommet
 
 				iNBSommets = atoi(buffer);
-				
+
 				break;
 			case 2: //nombre d'arc
 
@@ -69,10 +69,10 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 						buffer++;
 					}
 					buffer++;
-					
+
 					pGRAArg->GRACreerSommet(atoi(buffer));
-					
-					
+
+
 					//on va a la ligne suivante i+1 fois
 					std::getline(MonFichier, ligne);
 
@@ -80,17 +80,17 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					buffer = new char[size];
 
 					strncpy_s(buffer, size, ligne.c_str(), size);
-					if (*buffer != ']' && iBoucle == iNBSommets-1) {
+					if (*buffer != ']' && iBoucle == iNBSommets - 1) {
 
-						
-							CException EXCObj;
-							EXCObj.EXCset(tropDeSommets);
-							throw(EXCObj);
-						
+						std::cout << "il y a trop de sommets renseigné comparer à NBSommet" << std::endl;
+						CException EXCObj;
+						EXCObj.EXCset(tropDeSommets);
+						throw(EXCObj);
+
 					}
-					else if (*buffer == ']' && iBoucle < iNBSommets-1) {
+					else if (*buffer == ']' && iBoucle < iNBSommets - 1) {
 
-
+						std::cout << "il y a trop de sommets renseigné comparer à NBSommet" << std::endl;
 						CException EXCObj;
 						EXCObj.EXCset(peuDeSommets);
 						throw(EXCObj);
@@ -134,7 +134,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 						buffer++;
 					}
 					int iNumSommet1 = atoi(buffer2);
-		
+
 
 					//on enleve de notre buffer la partie ', variable = '
 					while (*buffer != '=') {
@@ -145,17 +145,17 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					int iNumSommet2 = atoi(buffer);
 
 					//on link les 2 sommets
-					try{
-					Csommet* pSOMsommet1 = pGRAArg->GRATrouverSommet(iNumSommet1);
-					Csommet* pSOMsommet2 = pGRAArg->GRATrouverSommet(iNumSommet2);
+					try {
+						Csommet* pSOMsommet1 = pGRAArg->GRATrouverSommet(iNumSommet1);
+						Csommet* pSOMsommet2 = pGRAArg->GRATrouverSommet(iNumSommet2);
 
-					
+
 						pSOMsommet1->SOMLink(pSOMsommet2);
 					}
 					catch (CException EXCLevee) {
 						std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
 					}
-					
+
 
 					//on va a la ligne suivante i+1 fois
 					std::getline(MonFichier, ligne);
@@ -164,9 +164,9 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					buffer = new char[size];
 
 					strncpy_s(buffer, size, ligne.c_str(), size);
-					if (*buffer != ']' && iBoucle2 == iNBArcs-1) {
+					if (*buffer != ']' && iBoucle2 == iNBArcs - 1) {
 
-
+						std::cout << "il y a trop d'arc renseigné comparer à NBArcs" << std::endl;
 						CException EXCObj;
 						EXCObj.EXCset(tropDArc);
 						throw(EXCObj);
@@ -174,7 +174,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					}
 					else if (*buffer == ']' && iBoucle2 < iNBArcs - 1) {
 
-
+						std::cout << "il y a trop peu d'arc renseigné comparer à NBArcs" << std::endl;
 						CException EXCObj;
 						EXCObj.EXCset(peuDArc);
 						throw(EXCObj);
@@ -188,9 +188,9 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 	}
 	else
 	{
-	CException EXCObj;
-	EXCObj.EXCset(ouvertureFichier);
-	throw(EXCObj);
+		CException EXCObj;
+		EXCObj.EXCset(ouvertureFichier);
+		throw(EXCObj);
 	}
 }
 

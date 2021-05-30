@@ -48,6 +48,7 @@ void Cgraphe::GRAAjouterSommet(Csommet * pSOMArg)
 	{
 		if (this->psGRATab[iBoucle]->SOMNumSommet()== pSOMArg->SOMNumSommet())
 		{
+			std::cout << "Le sommet deja present de le graphe, impossible d'ajouter le sommet" << std::endl;
 			CException EXCObj;
 			EXCObj.EXCset(sommetPresent);
 			throw(EXCObj);
@@ -176,6 +177,7 @@ void Cgraphe::GRASuppSommetNum(unsigned int iArg)
 		}
 	}
 	if (iIndice == -1) {
+		std::cout << "Le sommet non deja present de le graphe, impossible de supprimer" << std::endl;
 		CException EXCObj;
 		EXCObj.EXCset(sommetNonPresent);
 		throw(EXCObj);

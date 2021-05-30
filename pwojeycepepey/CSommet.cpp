@@ -114,6 +114,7 @@ void Csommet::SOMLink(Csommet * pSOMArg)
 	}
 	if (this->SOMIsLink(pSOMArg)!=0)
 	{
+		std::cout << "L'arc est deja present dans le sommet " << this->SOMNumSommet() << " impossible de l'ajouter" << std::endl;
 		CException EXCObj;
 		EXCObj.EXCset(arcDejaPresent);
 		throw(EXCObj);
@@ -470,6 +471,7 @@ void Csommet::SOMSuppArcArrivant(Carc * pARCArg)
 		}
 	}
 	else {
+		std::cout << "L'arc n'est pas present dans le sommet " << this->SOMNumSommet() << " impossible de le supprimer"<<std::endl;
 		CException EXCObj;
 		EXCObj.EXCset(arcNonPresent);
 		throw(EXCObj);
@@ -526,6 +528,7 @@ void Csommet::SOMSuppArcPartant(Carc* pARCArg)
 		}
 	}
 	else {
+		std::cout << "L'arc n'est pas present dans le sommet " << this->SOMNumSommet() << " impossible de le supprimer" << std::endl;
 		CException EXCObj;
 		EXCObj.EXCset(arcNonPresent);
 		throw(EXCObj);
