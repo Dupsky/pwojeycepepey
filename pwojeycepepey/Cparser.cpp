@@ -150,5 +150,9 @@ void Cparser::LireFichier(Cgraphe* graphe)
 			}
 		}
 	}
+	else
+	{
+	std::cout << "erreur ouverture fichier" << std::endl;
+	}
 }
 

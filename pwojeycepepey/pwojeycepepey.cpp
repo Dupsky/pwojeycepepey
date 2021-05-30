@@ -5,32 +5,26 @@
 #include "Cgraphe.h"
 #include "Cparser.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    /*Cparser Fichier("test.txt");
+    if (argc == 1) {
+        std::cout << "aucun fichier en argument" << std::endl;
+        return 0;
+    }
+
+    Cparser Fichier(argv[1]);
     Cgraphe* graphe1 = new Cgraphe();
 
     Fichier.LireFichier(graphe1);
 
-    graphe1->AfficherGraph();*/
-    
-    Cgraphe graphe1 = Cgraphe();
-    graphe1.createSommet(1);
-    graphe1.createSommet(2);
-    graphe1.createSommet(3);
-    graphe1.createSommet(4);
+    std::cout << "\ngraphique a partir du fichier :\n" << std::endl;
+    graphe1->AfficherGraph();
 
-    graphe1.AfficherGraph();
+    graphe1->InverserGraph();
 
-    graphe->TrouverSommet(1)->link(graphe->TrouverSommet(2));
-    graphe->TrouverSommet(2)->link(graphe->TrouverSommet(3));
-    graphe->TrouverSommet(3)->link(graphe->TrouverSommet(2));
-    graphe->TrouverSommet(1)->link(graphe->TrouverSommet(3));
-    graphe->AfficherGraph();
+    std::cout << "\ngraphique apres l'inversion :\n" << std::endl;
+    graphe1->AfficherGraph();
 
-    graphe->InverserGraph();
-
-    graphe->AfficherGraph();
-   */
+    return 1;
 }
 
