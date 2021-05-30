@@ -14,6 +14,10 @@ public:
 ///////////erreurs///////////////
 
 #define ouvertureFichier 31
+#define tropDeSommets 32
+#define tropDArc 33
+#define peuDeSommets 34
+#define peuDArc 35
 
 
 

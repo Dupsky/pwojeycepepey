@@ -38,7 +38,12 @@ Cgraphe::~Cgraphe()
 void Cgraphe::GRAAjouterSommet(Csommet * pSOMArg)
 {
 	//this->GRAAfficherGraph();
-
+	if (pSOMArg == nullptr)
+	{
+		CException EXCObj;
+		EXCObj.EXCset(sommetNull);
+		throw(EXCObj);
+	}
 	for (int iBoucle = 0; iBoucle < this->stTailleTab; iBoucle++)
 	{
 		if (this->psGRATab[iBoucle]->SOMNumSommet()== pSOMArg->SOMNumSommet())

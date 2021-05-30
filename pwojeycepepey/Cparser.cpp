@@ -69,9 +69,10 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 						buffer++;
 					}
 					buffer++;
-
+					
 					pGRAArg->GRACreerSommet(atoi(buffer));
-
+					
+					
 					//on va a la ligne suivante i+1 fois
 					std::getline(MonFichier, ligne);
 
@@ -79,6 +80,22 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					buffer = new char[size];
 
 					strncpy_s(buffer, size, ligne.c_str(), size);
+					if (*buffer != ']' && iBoucle == iNBSommets-1) {
+
+						
+							CException EXCObj;
+							EXCObj.EXCset(tropDeSommets);
+							throw(EXCObj);
+						
+					}
+					else if (*buffer == ']' && iBoucle < iNBSommets-1) {
+
+
+						CException EXCObj;
+						EXCObj.EXCset(peuDeSommets);
+						throw(EXCObj);
+
+					}
 				}
 
 				break;
@@ -147,6 +164,22 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					buffer = new char[size];
 
 					strncpy_s(buffer, size, ligne.c_str(), size);
+					if (*buffer != ']' && iBoucle2 == iNBArcs-1) {
+
+
+						CException EXCObj;
+						EXCObj.EXCset(tropDArc);
+						throw(EXCObj);
+
+					}
+					else if (*buffer == ']' && iBoucle2 < iNBArcs - 1) {
+
+
+						CException EXCObj;
+						EXCObj.EXCset(peuDArc);
+						throw(EXCObj);
+
+					}
 				}
 
 				break;

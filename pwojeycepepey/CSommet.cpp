@@ -186,10 +186,14 @@ void Csommet::SOMUnlink(Csommet* pSOMArg)
 void Csommet::SOMSwitchLink(Csommet * pSOMArg)
 {
 
-
-	if (!pSOMArg->SOMIsLink(this) && this->SOMIsLink(pSOMArg)) {
-		this->SOMUnlink(pSOMArg);
-		pSOMArg->SOMLink(this);
+	try {
+		if (!pSOMArg->SOMIsLink(this) && this->SOMIsLink(pSOMArg)) {
+			this->SOMUnlink(pSOMArg);
+			pSOMArg->SOMLink(this);
+		}
+	}
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
 	}
 }
 

@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
         return 0;
     }
     else if (argc > 2) {
-        std::cout << "le programme de prend qu'un seul argument" << std::endl;
+        std::cout << "le programme ne prend qu'un seul argument" << std::endl;
         return 0;
     }
 
