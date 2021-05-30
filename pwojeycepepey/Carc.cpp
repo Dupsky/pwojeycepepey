@@ -37,6 +37,12 @@ Carc::~Carc() {
 *Entraîne : Modifie la uiDest d'un arc
 ********************************************************************/
 void Carc::ARCModifDest(unsigned int uiArg) {
+	try {
+		this->ARCDest();
+	}
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+	}
 	this->uiDest = uiArg;
 }
 /*******************************************************************
@@ -48,5 +54,11 @@ void Carc::ARCModifDest(unsigned int uiArg) {
 ********************************************************************/
 unsigned int Carc::ARCDest()
 {
+	if (this == nullptr)
+	{
+		CException EXCObj;
+		EXCObj.EXCset(arcNull);
+		throw(EXCObj);
+	}
 	return this->uiDest;
 }

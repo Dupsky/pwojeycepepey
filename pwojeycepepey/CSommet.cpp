@@ -45,6 +45,11 @@ Csommet::~Csommet()
 ********************************************************************/
 unsigned int Csommet::SOMNumSommet()
 {
+	if (this == nullptr) {
+		CException EXCObj;
+		EXCObj.EXCset(sommetNull);
+		throw(EXCObj);
+	}
 	return this->uiSOMNumSom;
 }
 
@@ -63,8 +68,13 @@ void Csommet::SOMAfficherArcsPartant()
 
 	while (iBoucle < this->iSOMNbPartant)
 	{
-		std::cout << this->uiSOMNumSom << "->" << this->paSOMPartant[iBoucle]->ARCDest() << " ; ";
-		iBoucle++;
+		try {
+			std::cout << this->uiSOMNumSom << "->" << this->paSOMPartant[iBoucle]->ARCDest() << " ; ";
+			iBoucle++;
+		}
+		catch (CException EXCLevee) {
+			std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+		}
 	}
 
 }
@@ -97,18 +107,30 @@ Csommet::Csommet(unsigned int uiArg)
 ********************************************************************/
 void Csommet::SOMLink(Csommet * pSOMArg)
 {
-	if (this == nullptr) {
+	if (this == nullptr || pSOMArg == nullptr) {
 		CException EXCObj;
 		EXCObj.EXCset(sommetNull);
 		throw(EXCObj);
 	}
-	Carc* arc1 = new Carc(pSOMArg->SOMNumSommet());
-	Carc* arc2 = new Carc(this->SOMNumSommet());
+	if (this->SOMIsLink(pSOMArg)!=0)
+	{
+		CException EXCObj;
+		EXCObj.EXCset(arcDejaPresent);
+		throw(EXCObj);
+	}
+	try {
+		Carc* arc1 = new Carc(pSOMArg->SOMNumSommet());
+		Carc* arc2 = new Carc(this->SOMNumSommet());
 
-	this->SOMArcPartant(arc1);
+		this->SOMArcPartant(arc1);
 
-	pSOMArg->SOMArcArrivant(arc2);
 
+
+		pSOMArg->SOMArcArrivant(arc2);
+	}
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+	}
 }
 
 /*******************************************************************
@@ -125,13 +147,27 @@ void Csommet::SOMUnlink(Csommet* pSOMArg)
 	if(this->SOMIsLink(pSOMArg)) { //il y a un lien de 1 vers 2
 
 		//suppression arc dans le sommet 1 (partant avec destination = 2)
-		this->SOMSuppArcPartant(this->SOMTrouverArcPartant(pSOMArg->SOMNumSommet()));
-
+		try {
+			this->SOMSuppArcPartant(this->SOMTrouverArcPartant(pSOMArg->SOMNumSommet()));
+		}
+		catch (CException EXCLevee) {
+			std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+		}
 		//suppression arc dans le sommet 2 (arrivant avec destination = 1)
-		pSOMArg->SOMSuppArcArrivant(pSOMArg->SOMTrouverArcArrivant(this->SOMNumSommet()));
+		try {
+			pSOMArg->SOMSuppArcArrivant(pSOMArg->SOMTrouverArcArrivant(this->SOMNumSommet()));
+		}
+		catch (CException EXCLevee) {
+			std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+		}
 	}
 	else {
-		std::cout << "Aucun lien entre le sommet " << this->uiSOMNumSom << " et le sommet" << pSOMArg->SOMNumSommet();
+		try {
+			std::cout << "Aucun lien entre le sommet " << this->uiSOMNumSom << " et le sommet" << pSOMArg->SOMNumSommet();
+		}
+		catch (CException EXCLevee) {
+			std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+		}
 	}
 
 
@@ -166,6 +202,7 @@ void Csommet::SOMSwitchLink(Csommet * pSOMArg)
 *Sortie : Carc * l'objet trouvé
 *Entraîne : Return l'arc avec uiDest comme destination dans la liste 
 *			des arcs partant
+*			Retourne nullptr si l'arc n'est pas présent
 ********************************************************************/
 
 Carc* Csommet::SOMTrouverArcPartant(unsigned int uiDest)
@@ -176,22 +213,30 @@ Carc* Csommet::SOMTrouverArcPartant(unsigned int uiDest)
 
 	while (iBoucle < this->iSOMNbPartant)
 	{
-		if (this->paSOMPartant[iBoucle]->ARCDest() == uiDest) {
-			iIndice = iBoucle;
+		try {
+			if (this->paSOMPartant[iBoucle]->ARCDest() == uiDest) {
+				iIndice = iBoucle;
+			}
+			iBoucle++;
 		}
-		iBoucle++;
+		catch (CException EXCLevee) {
+			std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+		}
 	}
-
-	if (iIndice != -1 && this->paSOMPartant[iIndice]->ARCDest() == uiDest)
-	{
-		return this->paSOMPartant[iIndice];
+	try {
+		if (iIndice != -1 && this->paSOMPartant[iIndice]->ARCDest() == uiDest)
+		{
+			return this->paSOMPartant[iIndice];
+		}
+		else
+		{
+			return nullptr;
+		}
 	}
-	else
-	{
-		CException EXCObj;
-		EXCObj.EXCset(arcNonPresent);
-		throw(EXCObj);
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
 	}
+	return nullptr;
 }
 
 /*******************************************************************
@@ -211,22 +256,30 @@ Carc* Csommet::SOMTrouverArcArrivant(unsigned int uiDest)
 
 	while (iBoucle < this->iSOMNbArrivant)
 	{
-		if (this->paSOMArrivant[iBoucle]->ARCDest() == uiDest) {
-			iIndice = iBoucle;
+		try {
+			if (this->paSOMArrivant[iBoucle]->ARCDest() == uiDest) {
+				iIndice = iBoucle;
+			}
+			iBoucle++;
 		}
-		iBoucle++;
+		catch (CException EXCLevee) {
+			std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+		}
 	}
-
-	if (iIndice != -1 && this->paSOMArrivant[iIndice]->ARCDest() == uiDest)
-	{
-		return this->paSOMArrivant[iIndice];
+	try {
+		if (iIndice != -1 && this->paSOMArrivant[iIndice]->ARCDest() == uiDest)
+		{
+			return this->paSOMArrivant[iIndice];
+		}
+		else
+		{
+			return nullptr;
+		}
 	}
-	else
-	{
-		CException EXCObj;
-		EXCObj.EXCset(arcNonPresent);
-		throw(EXCObj);
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
 	}
+	return nullptr;
 }
 
 /*******************************************************************
@@ -247,12 +300,17 @@ int Csommet::SOMIsLink(Csommet * pSOMArg)
 		{
 			return 0;
 		}
+		
 	}
 	catch (CException EXCLevee) {
-		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << std::endl;
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
 	}
+	return 0;
 
-}
+	}
+	
+
+
 
 /*******************************************************************
 * Modifier le numéro d'un sommet
@@ -265,6 +323,7 @@ int Csommet::SOMIsLink(Csommet * pSOMArg)
 ********************************************************************/
 void Csommet::SOMModifierNum(unsigned int uiArg)
 {
+
 	this->uiSOMNumSom = uiArg;
 	int iBoucle = 0;
 	while(iBoucle < this->iSOMNbArrivant)
@@ -290,6 +349,12 @@ void Csommet::SOMArcArrivant(Carc *pARCArg)
 	if (pARCtmp != nullptr) {
 		this->paSOMArrivant = pARCtmp;
 	}
+	else
+	{
+		CException EXCObj;
+		EXCObj.EXCset(reallocSommet);
+		throw(EXCObj);
+	}
 	
 	this->paSOMArrivant[this->SOMTailleArrivant()] = pARCArg;
 	this->iSOMNbArrivant++;
@@ -312,6 +377,12 @@ void Csommet::SOMArcPartant(Carc *pARCArg)
 		if (pARCtmp != nullptr)
 		{
 			this->paSOMPartant = pARCtmp;
+		}
+		else
+		{
+			CException EXCObj;
+			EXCObj.EXCset(reallocSommet);
+			throw(EXCObj);
 		}
 	
 	this->paSOMPartant[this->SOMTaillePartant()] = pARCArg;
@@ -355,6 +426,12 @@ int Csommet::SOMTaillePartant()
 ********************************************************************/
 void Csommet::SOMSuppArcArrivant(Carc * pARCArg)
 {
+	if (pARCArg == nullptr)
+	{
+		CException EXCObj;
+		EXCObj.EXCset(SOMarcNull);
+		throw(EXCObj);
+	}
 	Carc** pARCtmp = this->paSOMArrivant;
 	int iBoucle = 0;
 	int iIndice = -1;
@@ -381,9 +458,17 @@ void Csommet::SOMSuppArcArrivant(Carc * pARCArg)
 			this->paSOMArrivant = pARCtmp;
 			this->iSOMNbArrivant--;
 		}
-		else {
-			std::cout << "realloc non réussi" << std::endl;
+		else
+		{
+			CException EXCObj;
+			EXCObj.EXCset(reallocSommet);
+			throw(EXCObj);
 		}
+	}
+	else {
+		CException EXCObj;
+		EXCObj.EXCset(arcNonPresent);
+		throw(EXCObj);
 	}
 
 }
@@ -399,6 +484,12 @@ void Csommet::SOMSuppArcArrivant(Carc * pARCArg)
 ********************************************************************/
 void Csommet::SOMSuppArcPartant(Carc* pARCArg)
 {
+	if (pARCArg == nullptr)
+	{
+		CException EXCObj;
+		EXCObj.EXCset(SOMarcNull);
+		throw(EXCObj);
+	}
 	Carc** pARCtmp = this->paSOMPartant;
 	int iBoucle = 0;
 	int iIndice = -1;
@@ -423,9 +514,17 @@ void Csommet::SOMSuppArcPartant(Carc* pARCArg)
 			this->paSOMPartant = pARCtmp;
 			this->iSOMNbPartant--;
 		}
-		else {
-			std::cout << "realloc non réussi" << std::endl;
+		else
+		{
+			CException EXCObj;
+			EXCObj.EXCset(reallocSommet);
+			throw(EXCObj);
 		}
+	}
+	else {
+		CException EXCObj;
+		EXCObj.EXCset(arcNonPresent);
+		throw(EXCObj);
 	}
 }
 
@@ -440,13 +539,21 @@ void Csommet::SOMSuppArcPartant(Carc* pARCArg)
 
 void Csommet::SOMAfficherTabs() {
 	int iBoucle = 0;
-	
-	std::cout << "Sommet n = " << this->SOMNumSommet() << " :\n-> :" << std::endl;
-
+	try {
+		std::cout << "Sommet n = " << this->SOMNumSommet() << " :\n-> :" << std::endl;
+	}
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+	}
 	while (iBoucle < this->iSOMNbPartant)
 	{
-		std::cout << "T[" << iBoucle << "] = " << this->paSOMPartant[iBoucle]->ARCDest() << std::endl;
-		iBoucle++;
+		try {
+			std::cout << "T[" << iBoucle << "] = " << this->paSOMPartant[iBoucle]->ARCDest() << std::endl;
+			iBoucle++;
+		}
+		catch (CException EXCLevee) {
+			std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+		}
 	}
 
 	iBoucle = 0;
@@ -455,8 +562,13 @@ void Csommet::SOMAfficherTabs() {
 
 	while (iBoucle < this->iSOMNbArrivant)
 	{
-		std::cout << "T[" << iBoucle << "] = " << this->paSOMArrivant[iBoucle]->ARCDest() << std::endl;
-		iBoucle++;
+		try {
+			std::cout << "T[" << iBoucle << "] = " << this->paSOMArrivant[iBoucle]->ARCDest() << std::endl;
+			iBoucle++;
+		}
+		catch (CException EXCLevee) {
+			std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+		}
 	}
 	std::cout << std::endl;
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "Cexception.h"
 class Carc
 {
 private:
@@ -10,4 +11,7 @@ public:
 	void ARCModifDest(unsigned int uiArg);
 	unsigned int ARCDest();
 };
+///////////erreurs///////////////
+
+#define arcNull 21
 

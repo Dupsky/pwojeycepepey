@@ -11,6 +11,9 @@ public:
 	void PARLireFichier(Cgraphe* pGRAArg);
 
 };
+///////////erreurs///////////////
+
+#define ouvertureFichier 31
 
 
 

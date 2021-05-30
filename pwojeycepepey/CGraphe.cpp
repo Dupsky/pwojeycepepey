@@ -55,7 +55,6 @@ void Cgraphe::GRAAjouterSommet(Csommet * pSOMArg)
 		CException EXCObj;
 		EXCObj.EXCset(reallocImpo);
 		throw(EXCObj);
-		stTailleTab--;
 	}
 	else {
 		this->psGRATab = pSOMtemp;
@@ -74,12 +73,17 @@ void Cgraphe::GRAAjouterSommet(Csommet * pSOMArg)
 ********************************************************************/
 void Cgraphe::GRAAfficherGraph()
 {
-	int iPos=0;
-	std::cout << "Liste des sommets du graphique et leurs arcs partant" << std::endl;
-	for (iPos; iPos < this->stTailleTab; iPos++) {
-		std::cout << "Sommet " << this->psGRATab[iPos]->SOMNumSommet() << ": ";
-		this->psGRATab[iPos]->SOMAfficherArcsPartant();
-		std::cout << std::endl;
+	try {
+		int iPos = 0;
+		std::cout << "Liste des sommets du graphique et leurs arcs partant" << std::endl;
+		for (iPos; iPos < this->stTailleTab; iPos++) {
+			std::cout << "Sommet " << this->psGRATab[iPos]->SOMNumSommet() << ": ";
+			this->psGRATab[iPos]->SOMAfficherArcsPartant();
+			std::cout << std::endl;
+		}
+	}
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
 	}
 }
 /*******************************************************************
@@ -201,8 +205,12 @@ void Cgraphe::GRASuppSommetNum(unsigned int iArg)
 void Cgraphe::GRACreerSommet(unsigned int uiArg)
 {
 	Csommet * pSOMArg =new Csommet(uiArg);
-
-	this->GRAAjouterSommet(pSOMArg);
+	try {
+		this->GRAAjouterSommet(pSOMArg);
+	}
+	catch (CException EXCLevee) {
+		std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+	}
 	//this->psGRATab[uiArg - 1];
 }
 /*******************************************************************

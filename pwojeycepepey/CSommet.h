@@ -43,5 +43,7 @@ public:
 ///////////erreurs///////////////
 
 #define sommetNull 10 
-#define arcNonPresent 11
-
+#define SOMarcNull 11
+#define arcNonPresent 12
+#define reallocSommet 13
+#define arcDejaPresent 14

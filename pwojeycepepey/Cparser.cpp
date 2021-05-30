@@ -24,7 +24,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 	int iNBSommets = 0;
 	int iNBArcs = 0;
 
-
+	
 	if (MonFichier) {
 		std::string ligne;
 		while (std::getline(MonFichier, ligne))
@@ -128,13 +128,16 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					int iNumSommet2 = atoi(buffer);
 
 					//on link les 2 sommets
-
+					try{
 					Csommet* pSOMsommet1 = pGRAArg->GRATrouverSommet(iNumSommet1);
 					Csommet* pSOMsommet2 = pGRAArg->GRATrouverSommet(iNumSommet2);
 
-
-					pSOMsommet1->SOMLink(pSOMsommet2);
-
+					
+						pSOMsommet1->SOMLink(pSOMsommet2);
+					}
+					catch (CException EXCLevee) {
+						std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+					}
 					
 
 					//on va a la ligne suivante i+1 fois
@@ -152,7 +155,9 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 	}
 	else
 	{
-	std::cout << "erreur ouverture fichier" << std::endl;
+	CException EXCObj;
+	EXCObj.EXCset(ouvertureFichier);
+	throw(EXCObj);
 	}
 }
 
