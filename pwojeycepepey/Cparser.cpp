@@ -82,7 +82,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					strncpy_s(buffer, size, ligne.c_str(), size);
 					if (*buffer != ']' && iBoucle == iNBSommets - 1) {
 
-						std::cout << "il y a trop de sommets renseigné comparer à NBSommet" << std::endl;
+						std::cout << "il y a trop de sommets renseigne comparer a NBSommet" << std::endl;
 						CException EXCObj;
 						EXCObj.EXCset(tropDeSommets);
 						throw(EXCObj);
@@ -90,7 +90,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					}
 					else if (*buffer == ']' && iBoucle < iNBSommets - 1) {
 
-						std::cout << "il y a trop de sommets renseigné comparer à NBSommet" << std::endl;
+						std::cout << "il y a trop de sommets renseigne comparer a NBSommet" << std::endl;
 						CException EXCObj;
 						EXCObj.EXCset(peuDeSommets);
 						throw(EXCObj);
@@ -166,7 +166,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					strncpy_s(buffer, size, ligne.c_str(), size);
 					if (*buffer != ']' && iBoucle2 == iNBArcs - 1) {
 
-						std::cout << "il y a trop d'arc renseigné comparer à NBArcs" << std::endl;
+						std::cout << "il y a trop d'arc renseigne comparer a NBArcs" << std::endl;
 						CException EXCObj;
 						EXCObj.EXCset(tropDArc);
 						throw(EXCObj);
@@ -174,7 +174,7 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 					}
 					else if (*buffer == ']' && iBoucle2 < iNBArcs - 1) {
 
-						std::cout << "il y a trop peu d'arc renseigné comparer à NBArcs" << std::endl;
+						std::cout << "il y a trop peu d'arc renseigne comparer a NBArcs" << std::endl;
 						CException EXCObj;
 						EXCObj.EXCset(peuDArc);
 						throw(EXCObj);
