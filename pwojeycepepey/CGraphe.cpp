@@ -3,18 +3,38 @@
 #include <iostream>
 
 
-
+/*******************************************************************
+*  Constructeur par défaut 
+********************************************************************
+*Entrée : 
+*Sortie :
+*Entraîne : Crée un objet de la classe Cgraphe
+********************************************************************/
 Cgraphe::Cgraphe()
 {
 	this->pGRATab = nullptr;
 	this->stTailleTab = 0;
 }
-
+/*******************************************************************
+*  Destructeur par défaut
+********************************************************************
+*Entrée :
+*Sortie :
+*Entraîne : Détruit un objet de la classe Cgraphe
+********************************************************************/
 Cgraphe::~Cgraphe()
 {
 	free(this->pGRATab);
 }
 
+/*******************************************************************
+*  Ajouter un sommet au graphe
+********************************************************************
+*Entrée : L'objet pointé est de classe Cgraphe
+*		  Csommet * sommet le sommet à ajouter au graph
+*Sortie : void
+*Entraîne : Ajoute un sommet au graphe
+********************************************************************/
 void Cgraphe::addSommet(Csommet * sommet)
 {
 	//this->AfficherGraph();
@@ -45,6 +65,13 @@ void Cgraphe::addSommet(Csommet * sommet)
 	
 }
 
+/*******************************************************************
+*  Afficher le graphe
+********************************************************************
+*Entrée :
+*Sortie : void
+*Entraîne : Affiche le graphe 
+********************************************************************/
 void Cgraphe::AfficherGraph()
 {
 	int pos=0;
@@ -55,7 +82,13 @@ void Cgraphe::AfficherGraph()
 		std::cout << std::endl;
 	}
 }
-
+/*******************************************************************
+*  Inverser le graphe
+********************************************************************
+*Entrée :
+*Sortie : void
+*Entraîne : inverse les arcs entre chaque sommet du graphe
+********************************************************************/
 void Cgraphe::InverserGraph()
 {
 	for (int i = 0; i < this->stTailleTab; i++)
@@ -69,11 +102,24 @@ void Cgraphe::InverserGraph()
 	}
 }
 
+/*******************************************************************
+*  Récupère la taille du graphe (du tableau de Csommet)
+********************************************************************
+*Entrée :
+*Sortie : void
+*Entraîne : Return la taille du tableau de Csommet du graphe
+********************************************************************/
 size_t Cgraphe::tailleTab()
 {
 	return this->stTailleTab;
 }
-
+/*******************************************************************
+*  Supprime un sommet à partir de son index
+********************************************************************
+*Entrée : Le numéro du sommet
+*Sortie : void
+*Entraîne : La suppression du sommet this->pGRATab[iArg]
+********************************************************************/
 void Cgraphe::SuppSommetIndex(unsigned int iArg)
 {
 	int iBoucle = 0;
@@ -102,7 +148,13 @@ void Cgraphe::SuppSommetIndex(unsigned int iArg)
 		throw(EXCObj);
 	}
 }
-
+/*******************************************************************
+* Suppression du sommet à partir de son numéro 
+********************************************************************
+*Entrée : Le numéro du sommet à supprimer
+*Sortie :void
+*Entraîne : Supprime le sommet numéro iArg
+********************************************************************/
 void Cgraphe::SuppSommetNum(unsigned int iArg)
 {
 	int iBoucle = 0;
@@ -139,7 +191,13 @@ void Cgraphe::SuppSommetNum(unsigned int iArg)
 	}
 
 }
-
+/*******************************************************************
+* Création d'un nouveau sommet et ajout de ce dernier au graphe
+********************************************************************
+*Entrée : Le numéro du sommet à créer
+*Sortie :void
+*Entraîne : Ajoute le nouveau sommet numéro iArg au graphe
+********************************************************************/
 void Cgraphe::createSommet(unsigned int uiArg)
 {
 	Csommet * sommet =new Csommet(uiArg);
@@ -147,7 +205,13 @@ void Cgraphe::createSommet(unsigned int uiArg)
 	this->addSommet(sommet);
 	//this->pGRATab[uiArg - 1];
 }
-
+/*******************************************************************
+* Trouver un sommet dans le graphe
+********************************************************************
+*Entrée : Le numéro du sommet à trouver
+*Sortie : Csommet * 
+*Entraîne : Return le sommet à trouver dans le graphe
+********************************************************************/
 Csommet* Cgraphe::TrouverSommet(unsigned int uiArg)
 {
 	int i = 0;
@@ -174,7 +238,13 @@ Csommet* Cgraphe::TrouverSommet(unsigned int uiArg)
 
 
 
-
+/*******************************************************************
+* Récuperer la taille du graphique
+********************************************************************
+*Entrée : 
+*Sortie : size_t la taille du graphe
+*Entraîne : Return la taille du Graphe (nombre de sommets)
+********************************************************************/
 size_t Cgraphe::sizeofgraph()
 {
 	return sizeof(this->pGRATab);

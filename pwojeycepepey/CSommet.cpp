@@ -6,7 +6,13 @@
 
 using std::size;
 
-
+/*******************************************************************
+* Constructeur par défaut
+********************************************************************
+*Entrée :
+*Sortie :void
+*Entraîne : Crée un objet de la classe Csommet
+********************************************************************/
 
 Csommet::Csommet()
 {
@@ -18,11 +24,11 @@ Csommet::Csommet()
 }
 
 /*******************************************************************
-*
+* Destructeur par défaut
 ********************************************************************
 *Entrée :
-*Sortie :
-*Entraîne :
+*Sortie :void
+*Entraîne : Détruit un objet de la classe Csommet
 ********************************************************************/
 Csommet::~Csommet()
 {
@@ -30,7 +36,13 @@ Csommet::~Csommet()
 	delete[] this->SOMPartant;
 	delete[] this->SOMArrivant;
 }
-
+/*******************************************************************
+* Récupérer le numéro du sommet
+********************************************************************
+*Entrée :
+*Sortie :unsigned int le numéro du sommet
+*Entraîne : Return le numéro du sommet pointé
+********************************************************************/
 unsigned int Csommet::AfficherNum()
 {
 	return this->uiSOMNumSom;
@@ -59,11 +71,12 @@ void Csommet::AfficherArcsPartant()
 
 
 /*******************************************************************
-*
+* Constructeur avec numéro du sommet 
 ********************************************************************
-*Entrée :
-*Sortie :
-*Entraîne :
+*Entrée : unsigned int le numéro de sommet voulu
+*Sortie :void
+*Entraîne : Créer un objet de la classe Csommet avec comme numéro de 
+*			sommet uiArg
 ********************************************************************/
 Csommet::Csommet(unsigned int uiArg)
 {
@@ -75,15 +88,15 @@ Csommet::Csommet(unsigned int uiArg)
 }
 
 /*******************************************************************
-*
+* Lier deux sommets
 ********************************************************************
-*Entrée :
-*Sortie :
-*Entraîne :
+*Entrée : Csommet * sommet le sommet à l'arrivée
+*Sortie : void
+*Entraîne : Lie deux sommet avec des arcs, l'objet pointé sera le départ
+*			et l'objet en argument sera l'arrivée
 ********************************************************************/
 void Csommet::link(Csommet * sommet)
 {
-	//std::cout << "creation du lien du sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
 	if (this == nullptr) {
 		CException EXCObj;
 		EXCObj.EXCset(sommetNull);
@@ -92,30 +105,22 @@ void Csommet::link(Csommet * sommet)
 	Carc* arc1 = new Carc(sommet->AfficherNum());
 	Carc* arc2 = new Carc(this->AfficherNum());
 
-
-	//arc1.ARCModifDest(sommet.AfficherNum());
-
 	this->SOMArcPartant(arc1);
-
-	//arc2.ARCModifDest(this->AfficherNum());
 
 	sommet->SOMArcArrivant(arc2);
 
-	
-	
 }
 
 /*******************************************************************
-*
+* délier deux sommet
 ********************************************************************
-*Entrée :
-*Sortie :
-*Entraîne :
+*Entrée : Csommet * sommet le sommet à l'arrivée
+*Sortie : void
+*Entraîne : délie deux sommets 
 ********************************************************************/
 
 void Csommet::unlink(Csommet* sommet)
 {
-	//std::cout << "suppression du lien du sommet " << this->AfficherNum() << " vers le sommet " << sommet.AfficherNum() << "\n" << std::endl;
 
 	if(this->islink(sommet)) { //il y a un lien de 1 vers 2
 
@@ -152,14 +157,15 @@ void Csommet::SwitchLink(Csommet * sommet)
 
 
 /*******************************************************************
-*
+* Trouver arc partant
 ********************************************************************
-*Entrée :
-*Sortie :
-*Entraîne :
+*Entrée : unsigned int la destination de l'arc à trouver
+*Sortie : Carc * l'objet trouvé
+*Entraîne : Return l'arc avec uiDest comme destination dans la liste 
+*			des arcs partant
 ********************************************************************/
 
-Carc* Csommet::TrouverArcPartant(unsigned int destination)
+Carc* Csommet::TrouverArcPartant(unsigned int uiDest)
 {
 	int i = 0;
 	int indice = -1;
@@ -167,13 +173,13 @@ Carc* Csommet::TrouverArcPartant(unsigned int destination)
 
 	while (i < this->iSOMPartant)
 	{
-		if (this->SOMPartant[i]->getDest() == destination) {
+		if (this->SOMPartant[i]->getDest() == uiDest) {
 			indice = i;
 		}
 		i++;
 	}
 
-	if (indice != -1 && this->SOMPartant[indice]->getDest() == destination)
+	if (indice != -1 && this->SOMPartant[indice]->getDest() == uiDest)
 	{
 		return this->SOMPartant[indice];
 	}
@@ -184,14 +190,15 @@ Carc* Csommet::TrouverArcPartant(unsigned int destination)
 }
 
 /*******************************************************************
-*
+* Trouver arc Arrivant
 ********************************************************************
-*Entrée :
-*Sortie :
-*Entraîne :
+*Entrée : unsigned int la destination de l'arc à trouver
+*Sortie : Carc * l'objet trouvé
+*Entraîne : Return l'arc avec uiDest comme destination dans la liste
+*			des arcs arrivants
 ********************************************************************/
 
-Carc* Csommet::TrouverArcArrivant(unsigned int destination)
+Carc* Csommet::TrouverArcArrivant(unsigned int uiDest)
 {
 	int i = 0;
 	int indice = -1;
@@ -199,13 +206,13 @@ Carc* Csommet::TrouverArcArrivant(unsigned int destination)
 
 	while (i < this->iSOMArrivant)
 	{
-		if (this->SOMArrivant[i]->getDest() == destination) {
+		if (this->SOMArrivant[i]->getDest() == uiDest) {
 			indice = i;
 		}
 		i++;
 	}
 
-	if (indice != -1 && this->SOMArrivant[indice]->getDest() == destination)
+	if (indice != -1 && this->SOMArrivant[indice]->getDest() == uiDest)
 	{
 		return this->SOMArrivant[indice];
 	}
@@ -216,11 +223,11 @@ Carc* Csommet::TrouverArcArrivant(unsigned int destination)
 }
 
 /*******************************************************************
-*
+* Deux sommet sont ils liés
 ********************************************************************
-*Entrée :
-*Sortie :
-*Entraîne :
+*Entrée : Csommet * sommet le sommet à l'arrivée
+*Sortie : int 1 si les sommets sont lié 0 sinon
+*Entraîne : la recherche d'un lien entre 2 sommets
 ********************************************************************/
 
 int Csommet::islink(Csommet * sommet)
@@ -265,8 +272,6 @@ void Csommet::SOMModifierNum(unsigned int uiArg)
 ********************************************************************/
 void Csommet::SOMArcArrivant(Carc *ARCArg)
 {
-		//Carc ** tmp = (Carc**)realloc(this->SOMArrivant, ((size_t)this->tailleArrivant() + 1) * (size_t)sizeof(ARCArg));
-
 
 	Carc** tmp = (Carc**) realloc (this->SOMArrivant, ((size_t)this->taillePartant() + 1) * (size_t)sizeof(ARCArg));
 	if (tmp != nullptr) {
