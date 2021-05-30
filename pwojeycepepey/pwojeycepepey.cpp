@@ -6,42 +6,26 @@
 #include "Cparser.h"
 #include "Cexception.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    /*
-    Cparser Fichier("test.txt");
+    if (argc == 1) {
+        std::cout << "aucun fichier en argument" << std::endl;
+        return 0;
+    }
+
+    Cparser Fichier(argv[1]);
     Cgraphe* graphe1 = new Cgraphe();
 
     Fichier.LireFichier(graphe1);
 
-    graphe1->AfficherGraph();*/
-    
-    Cgraphe * graphe = new Cgraphe();
+    std::cout << "\ngraphique a partir du fichier :\n" << std::endl;
+    graphe1->AfficherGraph();
 
-    graphe->createSommet(1);
-    graphe->createSommet(2);
-    graphe->createSommet(3);
-    graphe->createSommet(4);
-    graphe->createSommet(5);
-   
-   
-    graphe->TrouverSommet(1)->link(graphe->TrouverSommet(2));
-    graphe->TrouverSommet(2)->link(graphe->TrouverSommet(3));
-    graphe->TrouverSommet(3)->link(graphe->TrouverSommet(2));
-    graphe->TrouverSommet(4)->link(graphe->TrouverSommet(3));
-   
-   // graphe->TrouverSommet(5)->link(graphe->TrouverSommet(1));
-  
-    graphe->TrouverSommet(1)->link(graphe->TrouverSommet(5));
-    graphe->TrouverSommet(1)->link(graphe->TrouverSommet(4));
-    graphe->TrouverSommet(2)->link(graphe->TrouverSommet(4));
+    graphe1->InverserGraph();
 
-    
-    graphe->AfficherGraph();
+    std::cout << "\ngraphique apres l'inversion :\n" << std::endl;
+    graphe1->AfficherGraph();
 
-    graphe->InverserGraph();
-
-    graphe->AfficherGraph();
-   
+    return 1;
 }
 

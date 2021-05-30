@@ -12,8 +12,6 @@ public:
 	~Cgraphe();
 	void addSommet(Csommet * sommet);
 	void createSommet(unsigned int uiArg);
-
-	size_t sizeofgraph();
 	size_t tailleTab();
 	void AfficherGraph();
 	void InverserGraph();
