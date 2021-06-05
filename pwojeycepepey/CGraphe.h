@@ -18,6 +18,8 @@ public:
 	void GRASuppSommetIndex(unsigned int iArg);
 	void GRASuppSommetNum(unsigned int iArg);
 	Csommet* GRATrouverSommet(unsigned int iArg);
+
+	int GRAIsClique(unsigned int* piListeSommets, unsigned int iNbrSommets);
 };
 
 ///////////erreurs///////////////

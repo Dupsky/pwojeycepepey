@@ -1,15 +1,13 @@
-NBSommets=5
+NBSommets=3
 NBArcs=4
 Sommets=[ 
 Numero=1 
 Numero=2 
 Numero=3
-Numero=4
-Numero=1
 ] 
 Arcs=[ 
 Debut=1, Fin=2 
-Debut=2, Fin=3 
-Debut=3, Fin=1 
+Debut=2, Fin=3  
+Debut=3, Fin=2
 Debut=1, Fin=3
 ] 

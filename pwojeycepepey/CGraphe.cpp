@@ -250,3 +250,27 @@ Csommet* Cgraphe::GRATrouverSommet(unsigned int uiArg)
 		return nullptr;
 	}
 }
+
+/*******************************************************************
+* Trouver un sommet dans le graphe
+********************************************************************
+*Entrée : Le numéro du sommet à trouver
+*Sortie : Csommet *
+*Entraîne : Return le sommet à trouver dans le graphe
+********************************************************************/
+
+int Cgraphe::GRAIsClique(unsigned int* piListeSommets, unsigned int iNbrSommets)
+{
+	//prend un sommet et on verifie qu'il est lié avec tous les autres exepté lui même
+	
+	for (size_t i = 0; i < iNbrSommets; i++)
+	{
+		for (size_t j = 0; j < iNbrSommets; j++)
+		{
+			if (i != j && !(GRATrouverSommet(piListeSommets[i])->SOMIsLink(GRATrouverSommet(piListeSommets[j])) || GRATrouverSommet(piListeSommets[j])->SOMIsLink(GRATrouverSommet(piListeSommets[i]))  )) {
+				return 0;
+			}
+		}
+	}
+	return 1;
+}

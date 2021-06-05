@@ -9,7 +9,18 @@
 int main(int argc, char* argv[])
 {
 
-    if (argc == 1) {
+    Cparser Fichier("test.txt");
+    Cgraphe* graphe1 = new Cgraphe();
+  
+    Fichier.PARLireFichier(graphe1);
+    graphe1->GRAAfficherGraph();
+
+    unsigned int TAB[3] = { 1,2,3};
+
+    std::cout << graphe1->clique(TAB,3) << std::endl;
+
+
+    /*if (argc == 1) {
         std::cout << "aucun fichier en argument" << std::endl;
         return 0;
     }
@@ -35,7 +46,7 @@ int main(int argc, char* argv[])
     }
     catch (CException EXCLevee) {
         std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
-    }
+    }*/
 
 }
 
