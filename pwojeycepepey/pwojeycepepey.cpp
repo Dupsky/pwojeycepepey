@@ -11,13 +11,21 @@ int main(int argc, char* argv[])
 
     Cparser Fichier("test.txt");
     Cgraphe* graphe1 = new Cgraphe();
-  
-    Fichier.PARLireFichier(graphe1);
+    try {
+        Fichier.PARLireFichier(graphe1);
+    }
+    catch (CException EXCLevee) {
+        std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+    }
     graphe1->GRAAfficherGraph();
 
-    unsigned int TAB[3] = { 1,2,3};
-
-    std::cout << graphe1->clique(TAB,3) << std::endl;
+    unsigned int TAB[2] = {1,2};
+    try {
+        std::cout << graphe1->GRAIsClique(TAB, (sizeof(TAB) / sizeof(TAB[0]))) << std::endl;
+    }
+    catch (CException EXCLevee) {
+        std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+    }
 
 
     /*if (argc == 1) {
