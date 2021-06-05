@@ -259,7 +259,7 @@ Csommet* Cgraphe::GRATrouverSommet(unsigned int uiArg)
 *Entraîne : Return le sommet à trouver dans le graphe
 ********************************************************************/
 
-int Cgraphe::GRAIsClique(unsigned int* piListeSommets, unsigned int iNbrSommets)
+int Cgraphe::GRAIsClique(unsigned int* piListeSommets, size_t iNbrSommets)
 {
 	//prend un sommet et on verifie qu'il est lié avec tous les autres exepté lui même
 	
@@ -267,7 +267,9 @@ int Cgraphe::GRAIsClique(unsigned int* piListeSommets, unsigned int iNbrSommets)
 	{
 		for (size_t j = 0; j < iNbrSommets; j++)
 		{
-			if (i != j && !(GRATrouverSommet(piListeSommets[i])->SOMIsLink(GRATrouverSommet(piListeSommets[j])) || GRATrouverSommet(piListeSommets[j])->SOMIsLink(GRATrouverSommet(piListeSommets[i]))  )) {
+			if (i != j && !(GRATrouverSommet(piListeSommets[i])->SOMIsLink(GRATrouverSommet(piListeSommets[j])) 
+				|| GRATrouverSommet(piListeSommets[j])->SOMIsLink(GRATrouverSommet(piListeSommets[i])))) 
+			{
 				return 0;
 			}
 		}
