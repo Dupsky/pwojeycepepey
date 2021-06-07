@@ -277,16 +277,17 @@ int Cgraphe::GRAIsClique(unsigned int* piListeSommets, size_t iNbrSommets)
 
 	for (size_t i = 0; i < iNbrSommets; i++)
 	{
-		if (GRATrouverSommet(piListeSommets[i]) == nullptr)
-		{
-			std::cout << "sommet numero : " << piListeSommets[i] << " non present dans le graphe" << std::endl;
-			CException EXCObj;
-			EXCObj.EXCset(sommetNonPresent);
-			throw(EXCObj);
-		}
+		
 
 		for (size_t j = 0; j < iNbrSommets; j++)
 		{
+			if (GRATrouverSommet(piListeSommets[j]) == nullptr)
+			{
+				std::cout << "sommet numero : " << piListeSommets[j] << " non present dans le graphe" << std::endl;
+				CException EXCObj;
+				EXCObj.EXCset(sommetNonPresent);
+				throw(EXCObj);
+			}
 			if (i != j && !(GRATrouverSommet(piListeSommets[i])->SOMIsLink(GRATrouverSommet(piListeSommets[j])) 
 				|| GRATrouverSommet(piListeSommets[j])->SOMIsLink(GRATrouverSommet(piListeSommets[i])))) 
 			{

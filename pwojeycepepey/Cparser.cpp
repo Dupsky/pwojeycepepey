@@ -224,23 +224,26 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 						buffer++;
 					}
 				}
-
-				if (pGRAArg->GRAIsClique(piListeSommets, iNbrSommetsClique)) { //le sous graphe est une clique 
-					std::cout << "Le sous graphe";
-					for (int i = 0; i < iNbrSommetsClique; i++) {
-						std::cout << " "<<piListeSommets[i];
+				try {
+					if (pGRAArg->GRAIsClique(piListeSommets, iNbrSommetsClique)) { //le sous graphe est une clique 
+						std::cout << "Le sous graphe";
+						for (int i = 0; i < iNbrSommetsClique; i++) {
+							std::cout << " " << piListeSommets[i];
+						}
+						std::cout << " est une clique \n" << std::endl;
 					}
-					std::cout << " est une clique" << std::endl;
-				}
-				else
-				{
-					std::cout << "Le sous graphe" ;
-					for (int i = 0; i < iNbrSommetsClique; i++) {
-						std::cout << " " << piListeSommets[i];
+					else
+					{
+						std::cout << "Le sous graphe";
+						for (int i = 0; i < iNbrSommetsClique; i++) {
+							std::cout << " " << piListeSommets[i];
+						}
+						std::cout << " n'est pas une clique \n" << std::endl;
 					}
-					std::cout << " n'est pas une clique \n" << std::endl;
 				}
-
+				catch (CException EXCLevee) {
+					std::cout << "une exception a ete levee, numero " << EXCLevee.EXCget() << "\n" << std::endl;
+				}
 				break;
 			}
 		}
