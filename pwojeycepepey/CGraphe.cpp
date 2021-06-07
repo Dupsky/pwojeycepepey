@@ -252,24 +252,46 @@ Csommet* Cgraphe::GRATrouverSommet(unsigned int uiArg)
 }
 
 /*******************************************************************
-* Trouver un sommet dans le graphe
+* le sous-ensemble de sommet est il une clique
 ********************************************************************
-*Entrée : Le numéro du sommet à trouver
-*Sortie : Csommet *
-*Entraîne : Return le sommet à trouver dans le graphe
+*Entrée : la taille du sous-ensemble de sommet
+*		   
+*Sortie : int
+*Entraîne : recherche si le sous-ensemble de sommet est une clique
+*			1 oui c'est une clique 
+*		    0 non ce n'est pas une clique
 ********************************************************************/
 
 int Cgraphe::GRAIsClique(unsigned int* piListeSommets, size_t iNbrSommets)
 {
 	//prend un sommet et on verifie qu'il est lié avec tous les autres exepté lui même
 	
+	if (iNbrSommets > this->stTailleTab)
+	{
+		std::cout << "la taille de votre sous-ensemble de sommet est superieur à la taille du graphe" << std::endl;
+		CException EXCObj;
+		EXCObj.EXCset(tropDeSommetsGraphe);
+		throw(EXCObj);
+	}
+
+
 	for (size_t i = 0; i < iNbrSommets; i++)
 	{
+		if (GRATrouverSommet(piListeSommets[i]) == nullptr)
+		{
+			std::cout << "sommet numero : " << piListeSommets[i] << " non present dans le graphe" << std::endl;
+			CException EXCObj;
+			EXCObj.EXCset(sommetNonPresent);
+			throw(EXCObj);
+		}
+
 		for (size_t j = 0; j < iNbrSommets; j++)
 		{
 			if (i != j && !(GRATrouverSommet(piListeSommets[i])->SOMIsLink(GRATrouverSommet(piListeSommets[j])) 
 				|| GRATrouverSommet(piListeSommets[j])->SOMIsLink(GRATrouverSommet(piListeSommets[i])))) 
 			{
+			if (i != j && !(GRATrouverSommet(piListeSommets[i])->SOMIsLink(GRATrouverSommet(piListeSommets[j])) 
+				|| GRATrouverSommet(piListeSommets[j])->SOMIsLink(GRATrouverSommet(piListeSommets[i]))  )) {
 				return 0;
 			}
 		}

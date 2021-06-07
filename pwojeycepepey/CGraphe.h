@@ -28,3 +28,4 @@ public:
 #define sommetPresent 2
 #define sommetNonPresent 3
 #define argHorsLimite 4
+#define tropDeSommetsGraphe 5
