@@ -183,6 +183,65 @@ void Cparser::PARLireFichier(Cgraphe* pGRAArg)
 				}
 
 				break;
+
+			case 5: //sommets clique ?
+
+				//ligne suivante
+				std::getline(MonFichier, ligne);
+				size = ligne.size() + 1;
+				buffer = new char[size];
+				strncpy_s(buffer, size, ligne.c_str(), size);
+
+				//on enleve de notre buffer la partie 'variable = '
+				while (*buffer != '=') {
+					buffer++;
+				}
+				buffer++;
+
+
+				//on recupere les numeros des sommets de la potentiel clique
+
+				unsigned int piListeSommets[20];
+				size_t iNbrSommetsClique = 0;
+
+				while (*buffer != '\0')
+				{
+
+					char* buffer2 = new char[10];
+					int indiceNumero = 0;
+
+					//on capture chaque numero separé par un espace
+					while (*buffer != ' ' && *buffer != '\0') {
+						buffer2[indiceNumero] = *buffer;
+						indiceNumero++;
+						buffer++;
+					}
+					int num = atoi(buffer2);
+					piListeSommets[iNbrSommetsClique] = num;
+					iNbrSommetsClique++;
+
+					if (*buffer != '\0') {
+						buffer++;
+					}
+				}
+
+				if (pGRAArg->GRAIsClique(piListeSommets, iNbrSommetsClique)) { //le sous graphe est une clique 
+					std::cout << "Le sous graphe";
+					for (int i = 0; i < iNbrSommetsClique; i++) {
+						std::cout << " "<<piListeSommets[i];
+					}
+					std::cout << " est une clique" << std::endl;
+				}
+				else
+				{
+					std::cout << "Le sous graphe" ;
+					for (int i = 0; i < iNbrSommetsClique; i++) {
+						std::cout << " " << piListeSommets[i];
+					}
+					std::cout << " n'est pas une clique \n" << std::endl;
+				}
+
+				break;
 			}
 		}
 	}

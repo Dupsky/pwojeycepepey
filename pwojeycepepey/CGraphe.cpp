@@ -290,8 +290,6 @@ int Cgraphe::GRAIsClique(unsigned int* piListeSommets, size_t iNbrSommets)
 			if (i != j && !(GRATrouverSommet(piListeSommets[i])->SOMIsLink(GRATrouverSommet(piListeSommets[j])) 
 				|| GRATrouverSommet(piListeSommets[j])->SOMIsLink(GRATrouverSommet(piListeSommets[i])))) 
 			{
-			if (i != j && !(GRATrouverSommet(piListeSommets[i])->SOMIsLink(GRATrouverSommet(piListeSommets[j])) 
-				|| GRATrouverSommet(piListeSommets[j])->SOMIsLink(GRATrouverSommet(piListeSommets[i]))  )) {
 				return 0;
 			}
 		}
